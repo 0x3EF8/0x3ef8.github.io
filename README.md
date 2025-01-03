@@ -38,7 +38,6 @@ A minimal, interactive portfolio website built with Next.js 15, TypeScript, and 
 ### Development
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
-- **Bun** - Fast JavaScript runtime and package manager
   
 ```
 x3ef8@ubuntu:~/Desktop/0x3ef8.github.io-main$ tree -I node_modules
