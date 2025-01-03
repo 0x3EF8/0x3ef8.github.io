@@ -111,17 +111,17 @@ x3ef8@ubuntu:~/Desktop/0x3ef8.github.io-main$ tree -I node_modules
 1. Clone the repository:
 ```bash
 git clone https://github.com/0x3EF8/0x3ef8.github.io.git
-cd modern-portfolio
+cd 0x3ef8.github.io
 ```
 
 2. Install dependencies:
 ```bash
-bun install
+npm install
 ```
 
 3. Start the development server:
 ```bash
-bun dev
+npm run dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
