@@ -1,3 +1,4 @@
+
 # Jay Patrick Cano Website
 
 A minimal, interactive portfolio website built with Next.js 15, TypeScript, and Tailwind CSS. Features a unique terminal interface, particle background, and smooth animations.
@@ -39,7 +40,7 @@ A minimal, interactive portfolio website built with Next.js 15, TypeScript, and 
 - **Prettier** - Code formatting
 - **Bun** - Fast JavaScript runtime and package manager
   
-\`\`\`bash
+```
 x3ef8@ubuntu:~/Desktop/0x3ef8.github.io-main$ tree -I node_modules
 .
 ├── next-env.d.ts
@@ -103,25 +104,25 @@ x3ef8@ubuntu:~/Desktop/0x3ef8.github.io-main$ tree -I node_modules
 │       └── globals.css
 ├── tailwind.config.js
 └── tsconfig.json
-\`\`\`
+```
 
 ## 🚀 Getting Started
 
 1. Clone the repository:
-\`\`\`bash
+```bash
 git clone https://github.com/0x3EF8/0x3ef8.github.io.git
 cd modern-portfolio
-\`\`\`
+```
 
 2. Install dependencies:
-\`\`\`bash
+```bash
 bun install
-\`\`\`
+```
 
 3. Start the development server:
-\`\`\`bash
+```bash
 bun dev
-\`\`\`
+```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
@@ -129,19 +130,19 @@ bun dev
 
 The portfolio can be customized by modifying the following files:
 
-- \`config/content.ts\` - Main content configuration
-- \`config/terminal-content.ts\` - Terminal commands and responses
-- \`styles/globals.css\` - Global styles and theme variables
+- `config/content.ts` - Main content configuration
+- `config/terminal-content.ts` - Terminal commands and responses
+- `styles/globals.css` - Global styles and theme variables
 
 ## 🎨 Customization
 
 ### Theme
 
-The theme can be customized by modifying the CSS variables in \`styles/globals.css\`. The portfolio uses a CSS variable-based theming system that supports both light and dark modes.
+The theme can be customized by modifying the CSS variables in `styles/globals.css`. The portfolio uses a CSS variable-based theming system that supports both light and dark modes.
 
 ### Content
 
-Update the content in \`config/content.ts\` to personalize:
+Update the content in `config/content.ts` to personalize:
 - Hero section
 - Skills
 - Experience timeline
@@ -152,7 +153,7 @@ Update the content in \`config/content.ts\` to personalize:
 
 ### Terminal
 
-The interactive terminal can be customized by modifying \`config/terminal-content.ts\`:
+The interactive terminal can be customized by modifying `config/terminal-content.ts`:
 - Custom commands
 - ASCII art
 - Welcome message
@@ -198,6 +199,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-Made with ❤️ by [Jay Patrick Cano](https://github.com/0x3EF8)
-\`\`\`
-
+Made with ☕ by [Jay Patrick Cano](https://github.com/0x3EF8)
