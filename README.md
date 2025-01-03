@@ -39,9 +39,6 @@ A minimal, interactive portfolio website built with Next.js 15, TypeScript, and 
 - **Prettier** - Code formatting
 - **Bun** - Fast JavaScript runtime and package manager
 
-## 📦 Project Structure
-
-\`\`\`
 x3ef8@ubuntu:~/Desktop/0x3ef8.github.io-main$ tree -I node_modules
 .
 ├── next-env.d.ts
@@ -50,62 +47,62 @@ x3ef8@ubuntu:~/Desktop/0x3ef8.github.io-main$ tree -I node_modules
 ├── package.json
 ├── postcss.config.js
 ├── public
-│   ├── files
-│   ├── humans.txt
-│   ├── images
-│   │   ├── hirehub.jpg
-│   │   ├── nero.jpg
-│   │   ├── project.png
-│   │   ├── project2.jpg
-│   │   ├── project3.jpg
-│   │   └── project4.jpg
-│   ├── robots.txt
-│   ├── site.webmanifest
-│   └── sitemap.xml
+│   ├── files
+│   ├── humans.txt
+│   ├── images
+│   │   ├── hirehub.jpg
+│   │   ├── nero.jpg
+│   │   ├── project.png
+│   │   ├── project2.jpg
+│   │   ├── project3.jpg
+│   │   └── project4.jpg
+│   ├── robots.txt
+│   ├── site.webmanifest
+│   └── sitemap.xml
 ├── src
-│   ├── app
-│   │   ├── error.tsx
-│   │   ├── layout.tsx
-│   │   ├── not-found.tsx
-│   │   └── page.tsx
-│   ├── components
-│   │   ├── background
-│   │   │   ├── github-activity.tsx
-│   │   │   └── particle-background.tsx
-│   │   ├── interactive-terminal
-│   │   │   └── terminal.tsx
-│   │   ├── layout
-│   │   │   ├── footer.tsx
-│   │   │   └── nav.tsx
-│   │   ├── loading
-│   │   │   └── loading.tsx
-│   │   ├── sections
-│   │   │   ├── experience-timeline.tsx
-│   │   │   ├── hero.tsx
-│   │   │   ├── projects.tsx
-│   │   │   └── skills.tsx
-│   │   ├── theme
-│   │   │   ├── theme-provider.tsx
-│   │   │   └── theme-toggle.tsx
-│   │   └── ui
-│   │       ├── badge.tsx
-│   │       ├── button.tsx
-│   │       ├── card.tsx
-│   │       └── select.tsx
-│   ├── config
-│   │   ├── content.ts
-│   │   └── terminal-content.ts
-│   ├── hooks
-│   │   ├── useDocumentTitle.ts
-│   │   └── useTypewriter.ts
-│   ├── lib
-│   │   └── utils.ts
-│   └── styles
-│       ├── custom.css
-│       └── globals.css
+│   ├── app
+│   │   ├── error.tsx
+│   │   ├── layout.tsx
+│   │   ├── not-found.tsx
+│   │   └── page.tsx
+│   ├── components
+│   │   ├── background
+│   │   │   ├── github-activity.tsx
+│   │   │   └── particle-background.tsx
+│   │   ├── interactive-terminal
+│   │   │   └── terminal.tsx
+│   │   ├── layout
+│   │   │   ├── footer.tsx
+│   │   │   └── nav.tsx
+│   │   ├── loading
+│   │   │   └── loading.tsx
+│   │   ├── sections
+│   │   │   ├── experience-timeline.tsx
+│   │   │   ├── hero.tsx
+│   │   │   ├── projects.tsx
+│   │   │   └── skills.tsx
+│   │   ├── theme
+│   │   │   ├── theme-provider.tsx
+│   │   │   └── theme-toggle.tsx
+│   │   └── ui
+│   │       ├── badge.tsx
+│   │       ├── button.tsx
+│   │       ├── card.tsx
+│   │       └── select.tsx
+│   ├── config
+│   │   ├── content.ts
+│   │   └── terminal-content.ts
+│   ├── hooks
+│   │   ├── useDocumentTitle.ts
+│   │   └── useTypewriter.ts
+│   ├── lib
+│   │   └── utils.ts
+│   └── styles
+│       ├── custom.css
+│       └── globals.css
 ├── tailwind.config.js
 └── tsconfig.json
-\`\`\`
+
 
 ## 🚀 Getting Started
 
