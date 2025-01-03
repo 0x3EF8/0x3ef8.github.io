@@ -2,7 +2,7 @@
 
 A minimal, interactive portfolio website built with Next.js 15, TypeScript, and Tailwind CSS. Features a unique terminal interface, particle background, and smooth animations.
 
-![Portfolio Preview](https://github.com/0x3EF8.png)
+![Portfolio Preview](./public/images/portfolio.jpg)
 
 ## ✨ Features
 
