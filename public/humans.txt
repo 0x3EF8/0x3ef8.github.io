@@ -1,0 +1,12 @@
+/* TEAM */
+    Developer: Jay Patrick Cano
+    Contact: 0x3ef8@gmail.com
+    GitHub: https://github.com/0x3EF8
+    From: Philippines
+
+/* SITE */
+    Last update: 2026/01/02
+    Language: English
+    Doctype: HTML5
+    IDE: Visual Studio Code
+
