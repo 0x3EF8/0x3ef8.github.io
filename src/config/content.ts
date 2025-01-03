@@ -134,7 +134,7 @@ export const content = {
       },
       {
         date: '2021 - 2024',
-        title: 'Founder',
+        title: 'Former Founder',
         company: 'CodeSync.PH',
         description:
           '$ echo "Built a community platform for developers to learn, collaborate, and grow together."',
