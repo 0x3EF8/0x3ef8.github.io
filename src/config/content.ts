@@ -158,6 +158,17 @@ export const content = {
       { value: 'Chatbots', label: '$ grep -r Chatbots' },
     ],
     items: [
+  {
+        title: 'Portfolio',
+        description:
+          '$ echo "A minimal, interactive portfolio website built with Next.js, TypeScript, and Tailwind CSS, featuring a unique terminal interface, smooth animations, and dark/light mode support."',
+        technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+        github: 'https://github.com/0x3EF8/0x3ef8.github.io',
+        demo: 'https://0x3ef8.github.io',
+        category: 'web',
+        image: '/images/portfolio.png',
+        date: '01/03/25',
+      },
       {
         title: 'Nero 2.0',
         description:
