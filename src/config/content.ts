@@ -151,14 +151,15 @@ export const content = {
   // Showcases the developer's projects with details and filtering options
   projects: {
     title: '$ ls projects/',
-    description: '$ echo "A showcase of projects and experiments that reflect my creativity, dedication, and passion for continuous learning."',
+    description:
+      '$ echo "A showcase of projects and experiments that reflect my creativity, dedication, and passion for continuous learning."',
     filterOptions: [
       { value: 'all', label: '$ grep -r .' },
       { value: 'web', label: '$ grep -r web' },
       { value: 'Chatbots', label: '$ grep -r Chatbots' },
     ],
     items: [
-  {
+      {
         title: 'Portfolio',
         description:
           '$ echo "A minimal, interactive portfolio website built with Next.js, TypeScript, and Tailwind CSS, featuring a unique terminal interface, smooth animations, and dark/light mode support."',
@@ -207,25 +208,55 @@ export const content = {
   // Footer section
   // Contains the footer text, quotes, and social links
   footer: {
-    text: "Inspired by innovation, driven by passion.",
+    text: 'Inspired by innovation, driven by passion.',
     quotes: [
-      { text: "The people who are crazy enough to think they can change the world are the ones who do.", author: "Steve Jobs" },
-      { text: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
-      { text: "The best way to predict the future is to create it.", author: "Peter Drucker" },
-      { text: "Move fast and break things. Unless you are breaking stuff, you are not moving fast enough.", author: "Mark Zuckerberg" },
-      { text: "I think it is possible for ordinary people to choose to be extraordinary.", author: "Elon Musk" },
-      { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
-      { text: "The biggest risk is not taking any risk.", author: "Mark Zuckerberg" },
-      { text: "Failure is an option here. If things are not failing, you are not innovating enough.", author: "Elon Musk" },
-      { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-      { text: "Programming knowledge is the key to unlocking the power of a god.", author: "0x3EF8" },
+      {
+        text: 'The people who are crazy enough to think they can change the world are the ones who do.',
+        author: 'Steve Jobs',
+      },
+      {
+        text: 'Innovation distinguishes between a leader and a follower.',
+        author: 'Steve Jobs',
+      },
+      {
+        text: 'The best way to predict the future is to create it.',
+        author: 'Peter Drucker',
+      },
+      {
+        text: 'Move fast and break things. Unless you are breaking stuff, you are not moving fast enough.',
+        author: 'Mark Zuckerberg',
+      },
+      {
+        text: 'I think it is possible for ordinary people to choose to be extraordinary.',
+        author: 'Elon Musk',
+      },
+      {
+        text: "Your time is limited, don't waste it living someone else's life.",
+        author: 'Steve Jobs',
+      },
+      {
+        text: 'The biggest risk is not taking any risk.',
+        author: 'Mark Zuckerberg',
+      },
+      {
+        text: 'Failure is an option here. If things are not failing, you are not innovating enough.',
+        author: 'Elon Musk',
+      },
+      {
+        text: 'The only way to do great work is to love what you do.',
+        author: 'Steve Jobs',
+      },
+      {
+        text: 'Programming knowledge is the key to unlocking the power of a god.',
+        author: '0x3EF8',
+      },
     ],
     socialLinks: [
-      { name: "GitHub", url: "githubUrl", icon: "Github" },
-      { name: "Facebook", url: "facebookUrl", icon: "Facebook" },
-      { name: "Email", url: "emailUrl", icon: "Mail" },
+      { name: 'GitHub', url: 'githubUrl', icon: 'Github' },
+      { name: 'Facebook', url: 'facebookUrl', icon: 'Facebook' },
+      { name: 'Email', url: 'emailUrl', icon: 'Mail' },
     ],
-    copyright: "Jay Patrick Cano. All rights reserved.",
+    copyright: 'Jay Patrick Cano. All rights reserved.',
   },
   // GitHub Activity section
   // Sets up the GitHub activity feed display
@@ -240,7 +271,7 @@ export const content = {
   // Stores global URLs used throughout the portfolio
   global: {
     githubUrl: 'https://github.com/0x3EF8',
-    resumeUrl: '/files/resume.docs',
+    resumeUrl: null,
     facebookUrl: 'https://fb.me/x3EF8',
     emailUrl: 'mailto:0x3ef8@gmail.com',
   },

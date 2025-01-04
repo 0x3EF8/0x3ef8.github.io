@@ -1,19 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ParticleBackground } from '@/src/components/background/particle-background';
-import { Nav } from '@/src/components/layout/nav';
-import { Footer } from '@/src/components/layout/footer';
-import { Hero } from '@/src/components/sections/hero';
-import { Skills } from '@/src/components/sections/skills';
-import { ExperienceTimeline } from '@/src/components/sections/experience-timeline';
-import { Projects } from '@/src/components/sections/projects';
-import { InteractiveTerminal } from '@/src/components/interactive-terminal/terminal';
+import { ParticleBackground } from '@/components/background/particle-background';
+import { Nav } from '@/components/layout/nav';
+import { Footer } from '@/components/layout/footer';
+import { Hero } from '@/components/sections/hero';
+import { Skills } from '@/components/sections/skills';
+import { ExperienceTimeline } from '@/components/sections/experience-timeline';
+import { Projects } from '@/components/sections/projects';
+import { InteractiveTerminal } from '@/components/interactive-terminal/terminal';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDocumentTitle } from '@/src/hooks/useDocumentTitle';
+import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import Head from 'next/head';
-import { content } from '@/src/config/content';
-import { LoadingAnimation } from '@/src/components/loading/loading';
+import { content } from '@/config/content';
+import { LoadingAnimation } from '@/components/loading/loading';
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },

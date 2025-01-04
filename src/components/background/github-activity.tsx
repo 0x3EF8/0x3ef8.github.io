@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { content } from '@/src/config/content';
+import { content } from '@/config/content';
 
 interface GitHubEvent {
   id: string;
@@ -25,13 +25,9 @@ export function GitHubActivity() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      try {
-        const response = await fetch(content.githubActivity.apiUrl);
-        const data = await response.json();
-        setEvents(data.slice(0, content.githubActivity.maxEvents)); 
-      } catch (error) {
-        console.error('Error fetching GitHub events:', error);
-      }
+      const response = await fetch(content.githubActivity.apiUrl);
+      const data = await response.json();
+      setEvents(data.slice(0, content.githubActivity.maxEvents));
     };
 
     fetchEvents();
@@ -96,11 +92,11 @@ export function GitHubActivity() {
   const getFloatSpeed = (index: number) => {
     switch (index % 3) {
       case 0:
-        return { duration: 5, ease: 'linear' }; 
+        return { duration: 5, ease: 'linear' };
       case 1:
-        return { duration: 10, ease: 'linear' }; 
+        return { duration: 10, ease: 'linear' };
       case 2:
-        return { duration: 15, ease: 'linear' }; 
+        return { duration: 15, ease: 'linear' };
     }
   };
 

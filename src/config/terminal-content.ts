@@ -14,9 +14,10 @@ export const terminalContent = {
       description: 'Display information about available commands',
       action: `
         const commandList = Object.entries(commands)
-          .filter(([cmd, { hidden }]) => !hidden)
-          .map(([cmd, { description }]) => \`  \${cmd.padEnd(15)} \${description}\`);
-        return commandList.join('\\n');
+          .filter(([_, info]) => !info.hidden)
+          .map(([cmd, info]) => \`  \${cmd.padEnd(15)} \${info.description}\`)
+          .join('\\n');
+        return commandList;
       `,
     },
     man: {
@@ -49,8 +50,9 @@ export const terminalContent = {
         const files = ['about.txt', 'skills.md', 'projects.json', 'contact.vcf', 'experience.txt', 'learning_journey.log'];
         
         if (args.includes('-l')) {
-          const longFormat = files.map(file => \`drwxr-xr-x 2 jay users 4096 Jun 15 14:30 \${file}\`);
-          return longFormat.join('\\n');
+          return files
+            .map(file => \`drwxr-xr-x 2 jay users 4096 Jun 15 14:30 \${file}\`)
+            .join('\\n');
         }
         
         return files.join('  ');

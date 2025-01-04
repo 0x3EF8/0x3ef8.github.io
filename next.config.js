@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-output: "export",
+  output: 'export',
   reactStrictMode: true,
   images: {
     unoptimized: true,
@@ -15,11 +15,10 @@ output: "export",
         protocol: 'https',
         hostname: 'github.com',
         pathname: '/**',
-      }
+      },
     ],
   },
   trailingSlash: true,
-}
+};
 
-module.exports = nextConfig
-
+module.exports = nextConfig;

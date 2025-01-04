@@ -1,8 +1,8 @@
 import { Inter } from 'next/font/google';
 import { Metadata } from 'next';
-import { ThemeProvider } from '@/src/components/theme/theme-provider';
-import '@/src/styles/globals.css';
-import '@/src/styles/custom.css';
+import { ThemeProvider } from '@/components/theme/theme-provider';
+import '@/styles/globals.css';
+import '@/styles/custom.css';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 

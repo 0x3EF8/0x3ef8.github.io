@@ -4,7 +4,6 @@ export function useDocumentTitle(title: string, fallbackTitle: string) {
   const originalTitle = useRef<string | null>(null);
 
   useEffect(() => {
-    // Check if document is defined (client-side)
     if (typeof document !== 'undefined') {
       originalTitle.current = document.title;
       document.title = title;

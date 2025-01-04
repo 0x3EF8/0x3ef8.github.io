@@ -1,21 +1,15 @@
 'use client';
 
-import { useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ParticleBackground } from '@/src/components/background/particle-background';
-import { Nav } from '@/src/components/layout/nav';
-import { Footer } from '@/src/components/layout/footer';
-import { Button } from '@/src/components/ui/button';
+import { ParticleBackground } from '@/components/background/particle-background';
+import { Nav } from '@/components/layout/nav';
+import { Footer } from '@/components/layout/footer';
+import { Button } from '@/components/ui/button';
 import { RefreshCcw, Home, ArrowLeft } from 'lucide-react';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/src/components/ui/card';
-import { useDocumentTitle } from '@/src/hooks/useDocumentTitle';
-import { content } from '@/src/config/content';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useDocumentTitle } from '@/hooks/useDocumentTitle';
+import { content } from '@/config/content';
 
 const { error: errorContent } = content;
 
@@ -27,10 +21,6 @@ export default function Error({
   reset: () => void;
 }) {
   useDocumentTitle('Error | Jay Patrick Cano', 'Jay Patrick Cano | Portfolio');
-
-  useEffect(() => {
-    console.error('Error occurred:', error);
-  }, [error]);
 
   return (
     <div className='min-h-screen bg-background/50 text-foreground flex flex-col'>

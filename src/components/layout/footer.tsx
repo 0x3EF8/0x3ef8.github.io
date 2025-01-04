@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { GitHubActivity } from  "@/src/components/background/github-activity"
-import { content } from  "@/src/config/content"
-import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Facebook, Mail } from 'lucide-react'
-import Link from 'next/link'
+import React, { useState, useEffect } from 'react';
+import { GitHubActivity } from '@/components/background/github-activity';
+import { content } from '@/config/content';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Github, Facebook, Mail } from 'lucide-react';
+import Link from 'next/link';
 
 const iconComponents = {
   Github,
@@ -18,56 +18,57 @@ export function Footer() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuote((prev) => (prev + 1) % footer.quotes.length);
-    }, 10000); 
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [footer.quotes.length]);
 
   return (
-    <footer className="border-t py-4 mt-16 bg-background/80 backdrop-blur-sm relative">
+    <footer className='border-t py-4 mt-16 bg-background/80 backdrop-blur-sm relative'>
       <GitHubActivity />
-      <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center text-center">
-          <div className="h-16 mb-2 overflow-hidden">
-            <AnimatePresence mode="wait">
+      <div className='container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <div className='flex flex-col items-center text-center'>
+          <div className='h-16 mb-2 overflow-hidden'>
+            <AnimatePresence mode='wait'>
               <motion.blockquote
                 key={currentQuote}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="text-xs italic text-muted-foreground"
+                className='text-xs italic text-muted-foreground'
               >
                 &ldquo;{footer.quotes[currentQuote].text}&rdquo;
-                <footer className="text-xs mt-2 font-semibold">
+                <footer className='text-xs mt-2 font-semibold'>
                   - {footer.quotes[currentQuote].author}
                 </footer>
               </motion.blockquote>
             </AnimatePresence>
           </div>
-          <div className="flex justify-center space-x-4 mb-2">
+          <div className='flex justify-center space-x-4 mb-2'>
             {footer.socialLinks.map((link) => {
-              const IconComponent = iconComponents[link.icon as keyof typeof iconComponents];
+              const IconComponent =
+                iconComponents[link.icon as keyof typeof iconComponents];
               const url = (global as Record<string, string>)[link.url];
               return (
-                <Link 
-                  key={link.name} 
-                  href={url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                <Link
+                  key={link.name}
+                  href={url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='text-muted-foreground hover:text-primary transition-colors duration-200'
                 >
-                  {IconComponent && <IconComponent className="w-5 h-5" />}
-                  <span className="sr-only">{link.name}</span>
+                  {IconComponent && <IconComponent className='w-5 h-5' />}
+                  <span className='sr-only'>{link.name}</span>
                 </Link>
               );
             })}
           </div>
-          <p className="text-xs text-muted-foreground mt-2">
+          <p className='text-xs text-muted-foreground mt-2'>
             © {new Date().getFullYear()} {footer.copyright}
           </p>
         </div>
       </div>
     </footer>
-  )
+  );
 }

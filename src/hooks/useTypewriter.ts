@@ -12,7 +12,7 @@ export function useTypewriter(
 
   useEffect(() => {
     const word = words[currentWordIndex];
-    const prefix = word.split(' ')[0] + ' '; // Extract the prefix (e.g., '$', '$-#')
+    const prefix = word.split(' ')[0] + ' ';
 
     if (isDeleting) {
       if (currentText === prefix) {
