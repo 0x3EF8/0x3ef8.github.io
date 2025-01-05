@@ -107,6 +107,7 @@ const ProjectCard = React.memo(
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
+                  className='relative'
                 >
                   {!imageLoaded && (
                     <div className='absolute inset-0 flex items-center justify-center'>
