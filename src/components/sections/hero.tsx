@@ -59,9 +59,9 @@ const HeroButton = React.memo(({ button }: { button: HeroButton }) => {
   const IconComponent =
     iconComponents[button.icon as keyof typeof iconComponents];
   const url = button.url
-    ? (content.global as Record<string, string>)[
+    ? (content.global as Record<string, string | null>)[
         `${button.label.toLowerCase()}Url`
-      ]
+      ] || '#'
     : '#';
 
   const handleDownload = async () => {
@@ -78,7 +78,7 @@ const HeroButton = React.memo(({ button }: { button: HeroButton }) => {
     const downloadUrl = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = downloadUrl;
-    link.download = content.global.resumeUrl.split('/').pop() || '';
+    link.download = (content.global.resumeUrl as string).split('/').pop() || '';
     document.body.appendChild(link);
     link.click();
     link.remove();
