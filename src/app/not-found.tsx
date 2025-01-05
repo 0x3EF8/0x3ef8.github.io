@@ -1,12 +1,12 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ParticleBackground } from '@/components/background/particle-background';
 import { Nav } from '@/components/layout/nav';
 import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
-import { Home, FolderOpen, ArrowLeft } from 'lucide-react';
+import { Home, FolderOpen, ArrowLeft, Loader } from 'lucide-react';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import { content } from '@/config/content';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,6 +18,8 @@ export default function NotFound() {
     '404 - Page Not Found | Jay Patrick Cano',
     'Jay Patrick Cano | Portfolio'
   );
+
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   return (
     <div className='min-h-screen bg-background/50 text-foreground flex flex-col'>
@@ -74,13 +76,21 @@ export default function NotFound() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
+              className='relative'
             >
+              {!videoLoaded && (
+                <div className='absolute inset-0 flex items-center justify-center'>
+                  <Loader className='animate-spin w-8 h-8 text-muted-foreground' />
+                </div>
+              )}
               <video
                 autoPlay
                 loop
                 playsInline
-                className='w-full mt-4 rounded-lg'
+                className={`w-full mt-4 rounded-lg ${!videoLoaded ? 'opacity-0' : 'opacity-100'}`}
                 style={{ pointerEvents: 'none' }}
+                preload='auto'
+                onLoadedData={() => setVideoLoaded(true)}
               >
                 <source src='/files/rick.mp4' type='video/mp4' />
                 Your browser does not support the video tag.
