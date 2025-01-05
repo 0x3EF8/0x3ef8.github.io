@@ -57,6 +57,7 @@ const circleVariants = {
 const HeroButton = React.memo(({ button }: { button: HeroButton }) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const IconComponent =
     iconComponents[button.icon as keyof typeof iconComponents];
   const url = button.url
@@ -118,17 +119,25 @@ const HeroButton = React.memo(({ button }: { button: HeroButton }) => {
                 back later!
               </DialogDescription>
             </DialogHeader>
-            <video
-              autoPlay
-              loop
-              playsInline
-              className='w-full mt-4 rounded-lg'
-              style={{ pointerEvents: 'none' }}
-              preload='auto'
-            >
-              <source src='/files/rick.mp4' type='video/mp4' />
-              Your browser does not support the video tag.
-            </video>
+            <div className='relative'>
+              {!videoLoaded && (
+                <div className='absolute inset-0 flex items-center justify-center'>
+                  <Loader className='animate-spin w-8 h-8 text-muted-foreground' />
+                </div>
+              )}
+              <video
+                autoPlay
+                loop
+                playsInline
+                className={`w-full mt-4 rounded-lg ${!videoLoaded ? 'opacity-0' : 'opacity-100'}`}
+                style={{ pointerEvents: 'none' }}
+                preload='auto'
+                onLoadedData={() => setVideoLoaded(true)}
+              >
+                <source src='/files/rick.mp4' type='video/mp4' />
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </DialogContent>
         </Dialog>
       </>
