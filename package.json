@@ -9,8 +9,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ignore-pattern .next --ignore-pattern node_modules || echo 'Linting complete, no issues found.'",
-    "lint:fix": "eslint . --fix --ignore-pattern .next --ignore-pattern node_modules && echo 'Linting complete, all issues fixed.' || echo 'Some issues remain after fixing.'",
+    "lint": "eslint . --ignore-pattern .next --ignore-pattern node_modules",
+    "lint:fix": "eslint . --fix --ignore-pattern .next --ignore-pattern node_modules",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
