@@ -26,7 +26,7 @@ const sectionVariants = {
 
 export default function Portfolio() {
   useDocumentTitle(
-    'Jay Patrick Cano | Full Stack Developer Portfolio',
+    'Jay Patrick Cano | Self-Taught Developer Portfolio',
     'Jay Patrick Cano | Portfolio'
   );
   const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +42,7 @@ export default function Portfolio() {
   }, []);
 
   useEffect(() => {
-    document.title = 'Jay Patrick Cano | Full Stack Developer Portfolio';
+    document.title = 'Jay Patrick Cano | Self-Taught Developer Portfolio';
   }, []);
 
   const structuredData = {
@@ -61,7 +61,7 @@ export default function Portfolio() {
           height: 800,
         },
         sameAs: [content.global.githubUrl, content.global.facebookUrl],
-        jobTitle: 'Full Stack Developer',
+        jobTitle: 'Self-Taught Developer',
         worksFor: {
           '@type': 'Organization',
           name: 'CodeTriad Solutions',
@@ -76,7 +76,7 @@ export default function Portfolio() {
         url: 'https://0x3ef8.github.io',
         name: 'Jay Patrick Cano Portfolio',
         description:
-          'Portfolio of Jay Patrick Cano, a self-taught full stack developer from the Philippines',
+          'Portfolio of Jay Patrick Cano, a self-taught Self-Taught Developer from the Philippines',
         publisher: {
           '@id': 'https://0x3ef8.github.io/#person',
         },
@@ -86,7 +86,7 @@ export default function Portfolio() {
         '@type': 'WebPage',
         '@id': 'https://0x3ef8.github.io/#webpage',
         url: 'https://0x3ef8.github.io',
-        name: 'Jay Patrick Cano | Full Stack Developer Portfolio',
+        name: 'Jay Patrick Cano | Self-Taught Developer Portfolio',
         isPartOf: {
           '@id': 'https://0x3ef8.github.io/#website',
         },
@@ -94,7 +94,7 @@ export default function Portfolio() {
           '@id': 'https://0x3ef8.github.io/#person',
         },
         description:
-          'Explore the projects and skills of Jay Patrick Cano, a self-taught full stack developer from the Philippines specializing in modern web technologies.',
+          'Explore the projects and skills of Jay Patrick Cano, a self-taught Self-Taught Developer from the Philippines specializing in modern web technologies.',
         inLanguage: 'en-US',
         potentialAction: [
           {

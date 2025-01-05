@@ -18,8 +18,7 @@ export function Footer() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuote((prev) => (prev + 1) % footer.quotes.length);
-    }, 10000); // Change quote every 10 seconds
-
+    }, 10000);
     return () => clearInterval(interval);
   }, [footer.quotes.length]);
 

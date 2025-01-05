@@ -11,6 +11,7 @@ import {
   Link,
   Facebook,
   Mail,
+  Loader,
 } from 'lucide-react';
 import { content } from '@/config/content';
 import { motion } from 'framer-motion';
@@ -66,13 +67,16 @@ const HeroButton = React.memo(({ button }: { button: HeroButton }) => {
 
   const handleDownload = async () => {
     if (content.global.resumeUrl === null) {
+      setIsDownloading(true);
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Add a delay of 1 second
+      setIsDownloading(false);
       setIsModalOpen(true);
       return;
     }
 
     setIsDownloading(true);
     const response = await fetch(content.global.resumeUrl);
-    if (!response.ok) return; // No error alert or log
+    if (!response.ok) return;
 
     const blob = await response.blob();
     const downloadUrl = window.URL.createObjectURL(blob);
@@ -120,6 +124,7 @@ const HeroButton = React.memo(({ button }: { button: HeroButton }) => {
               playsInline
               className='w-full mt-4 rounded-lg'
               style={{ pointerEvents: 'none' }}
+              preload='auto'
             >
               <source src='/files/rick.mp4' type='video/mp4' />
               Your browser does not support the video tag.
@@ -154,6 +159,7 @@ HeroButton.displayName = 'HeroButton';
 export function Hero() {
   const { hero } = content;
   const { currentText, isTyping } = useTypewriter(hero.typingWords);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const memoizedButtons = useMemo(() => hero.buttons, [hero.buttons]);
 
@@ -166,12 +172,18 @@ export function Hero() {
         <div className='flex flex-col space-y-4 md:space-y-6'>
           <div className='flex items-start space-x-5 md:block'>
             <div className='relative flex-shrink-0 md:hidden'>
+              {!imageLoaded && (
+                <div className='absolute inset-0 flex items-center justify-center'>
+                  <Loader className='animate-spin w-8 h-8 text-muted-foreground' />
+                </div>
+              )}
               <Image
                 src={hero.image}
                 alt='Profile'
                 width={160}
                 height={160}
-                className='rounded-full shadow-lg'
+                className={`rounded-full shadow-lg ${!imageLoaded ? 'opacity-0' : 'opacity-100'}`}
+                onLoadingComplete={() => setImageLoaded(true)}
               />
             </div>
 
@@ -230,12 +242,18 @@ export function Hero() {
         </div>
       </div>
       <div className='hidden md:block md:flex-shrink-0 relative'>
+        {!imageLoaded && (
+          <div className='absolute inset-0 flex items-center justify-center'>
+            <Loader className='animate-spin w-8 h-8 text-muted-foreground' />
+          </div>
+        )}
         <Image
           src={hero.image}
           alt='Profile'
           width={300}
           height={300}
-          className='rounded-full shadow-lg'
+          className={`rounded-full shadow-lg ${!imageLoaded ? 'opacity-0' : 'opacity-100'}`}
+          onLoadingComplete={() => setImageLoaded(true)}
         />
         <motion.div className='absolute -bottom-4 -right-4 bg-background rounded-lg shadow-lg p-2 border border-primary/30'>
           <div className='flex items-center space-x-2'>

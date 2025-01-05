@@ -8,6 +8,7 @@ import {
   ChevronUp,
   ImageIcon,
   CalendarDays,
+  Loader,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -34,6 +35,7 @@ const ProjectCard = React.memo(
   ({ project }: { project: (typeof projects.items)[0] }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [showImage, setShowImage] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
 
     const shortDescription =
       project.description.split(' ').slice(0, 20).join(' ') + '... Click me';
@@ -106,12 +108,18 @@ const ProjectCard = React.memo(
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
                 >
+                  {!imageLoaded && (
+                    <div className='absolute inset-0 flex items-center justify-center'>
+                      <Loader className='animate-spin w-8 h-8 text-muted-foreground' />
+                    </div>
+                  )}
                   <Image
                     src={project.image}
                     alt={project.title}
                     width={550}
                     height={310}
-                    className='w-full h-48 object-cover mt-3 mb-3 rounded-md'
+                    className={`w-full h-48 object-cover mt-3 mb-3 rounded-md ${!imageLoaded ? 'opacity-0' : 'opacity-100'}`}
+                    onLoadingComplete={() => setImageLoaded(true)}
                   />
                 </motion.div>
               )}
