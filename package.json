@@ -9,7 +9,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next export",
     "lint": "eslint . --ignore-pattern .next --ignore-pattern node_modules",
     "lint:fix": "eslint . --fix --ignore-pattern .next --ignore-pattern node_modules",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
