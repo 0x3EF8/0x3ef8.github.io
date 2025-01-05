@@ -296,19 +296,19 @@ export const content = {
                                      `,
   },
   error: {
-    title: "Oops!",
-    subtitle: "Something went wrong",
-    description: "An unexpected error occurred. Please try again later.",
+    title: 'Oops!',
+    subtitle: 'Something went wrong',
+    description: 'An unexpected error occurred. Please try again later.',
     actions: [
-      { label: "Try again", icon: "RefreshCcw" },
-      { label: "Back to Home", icon: "Home" }
+      { label: 'Try again', icon: 'RefreshCcw' },
+      { label: 'Back to Home', icon: 'Home' },
     ],
     helpfulTips: [
-      "Refresh the page and try again",
-      "Clear your browser cache and cookies",
-      "Try accessing the site later",
-      "If the problem persists, please contact the site administrator"
-    ]
+      'Refresh the page and try again',
+      'Clear your browser cache and cookies',
+      'Try accessing the site later',
+      'If the problem persists, please contact the site administrator',
+    ],
   },
 
   notFound: {
