@@ -12,7 +12,7 @@ import { terminalContent } from '@/config/terminal-content';
 
 interface Command {
   description: string;
-  action: () => string | Promise<string>;
+  action: (args: string[]) => string | Promise<string>;
   hidden?: boolean;
 }
 
@@ -35,10 +35,11 @@ const commands: Record<string, Command> = Object.entries(
         'args',
         `
       return (async function() {
+        const terminalContent = ${JSON.stringify(terminalContent)};
         ${value.action}
       })();
     `
-      ) as Command['action'],
+      ) as unknown as Command['action'],
     };
     return acc;
   },
@@ -161,7 +162,7 @@ export function InteractiveTerminal() {
       } else {
         if (command in commands) {
           try {
-            const result = await commands[command].action.call(null, args);
+            const result = await commands[command].action(args);
             newOutput = [
               ...currentUserData.output,
               `❯ visitor ${cmd}`,

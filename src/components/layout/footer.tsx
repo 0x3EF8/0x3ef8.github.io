@@ -18,7 +18,7 @@ export function Footer() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuote((prev) => (prev + 1) % footer.quotes.length);
-    }, 10000);
+    }, 10000); // Change quote every 10 seconds
 
     return () => clearInterval(interval);
   }, [footer.quotes.length]);
@@ -38,7 +38,7 @@ export function Footer() {
                 transition={{ duration: 0.5 }}
                 className='text-xs italic text-muted-foreground'
               >
-                &ldquo;{footer.quotes[currentQuote].text}&rdquo;
+                &quot;{footer.quotes[currentQuote].text}&quot;
                 <footer className='text-xs mt-2 font-semibold'>
                   - {footer.quotes[currentQuote].author}
                 </footer>
@@ -49,11 +49,13 @@ export function Footer() {
             {footer.socialLinks.map((link) => {
               const IconComponent =
                 iconComponents[link.icon as keyof typeof iconComponents];
-              const url = (global as Record<string, string>)[link.url];
+              const url =
+                (global as Record<string, string | null>)[link.url] || '#';
+              const safeUrl = typeof url === 'string' ? url : '#';
               return (
                 <Link
                   key={link.name}
-                  href={url}
+                  href={safeUrl}
                   target='_blank'
                   rel='noopener noreferrer'
                   className='text-muted-foreground hover:text-primary transition-colors duration-200'

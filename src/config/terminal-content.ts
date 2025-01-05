@@ -13,11 +13,11 @@ export const terminalContent = {
     help: {
       description: 'Display information about available commands',
       action: `
-    const commandList = Object.entries(terminalContent.commands)
-      .filter(([_, { hidden }]) => !hidden)
-      .map(([cmd, { description }]) => \`  \${cmd.padEnd(15)} \${description}\`);
-    return commandList.join('\\n');
-  `,
+        const commandList = Object.entries(terminalContent.commands)
+          .filter(([_, { hidden }]) => !hidden)
+          .map(([cmd, { description }]) => \`  \${cmd.padEnd(15)} \${description}\`);
+        return commandList.join('\\n');
+      `,
     },
     man: {
       description: 'Display the manual page for a command',
@@ -185,6 +185,7 @@ Remember, everyone's journey is unique. The most important thing is to keep lear
       `,
     },
   },
+  githubReposUrl: 'https://api.github.com/users/0x3EF8/repos',
   asciiArt: `
    ___       _____ _____ _____ ___   
   / _ \\__  _|___ /| ____|  ___( _ )  

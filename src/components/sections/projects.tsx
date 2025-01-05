@@ -60,13 +60,13 @@ const ProjectCard = React.memo(
               <CardTitle className='text-sm'>
                 $ cat {project.title.toLowerCase().replace(/ /g, '_')}.md
               </CardTitle>
-              {project.date && (
-                <div className='absolute top-0 right-0 mt-3 mr-3 flex items-center text-sm text-muted-foreground'>
-                  <CalendarDays className='w-4 h-4 mr-1' />
-                  <span>{project.date}</span>
-                </div>
-              )}
-              <div className='flex gap-1'>
+              <div className='flex gap-1 items-center'>
+                {project.date && (
+                  <div className='flex items-center text-sm text-muted-foreground'>
+                    <CalendarDays className='w-4 h-4 mr-1' />
+                    <span>{project.date}</span>
+                  </div>
+                )}
                 {project.github && (
                   <Button size='sm' variant='ghost' className='h-8 w-8 p-0'>
                     <a
