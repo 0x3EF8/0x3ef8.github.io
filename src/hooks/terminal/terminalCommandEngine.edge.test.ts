@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { executeTerminalCommand } from "./terminalCommandEngine";
-import type { FolderId, TerminalLineKind } from "../types";
+import type { FolderId, TerminalLineKind } from "../../types";
 
 type AppendCall = {
   kind: TerminalLineKind;

@@ -4,16 +4,16 @@ import {
   FILE_MANAGER_PLACE_ORDER,
   FILE_MANAGER_PLACES,
   FOLDERS,
-} from "../constants";
-import { buildFileRows, filterRowsByPlace } from "../helpers";
-import type { DesktopController } from "../hooks/useDesktopController";
-import { LinuxControls } from "./LinuxControls";
+} from "../../constants";
+import { buildFileRows, filterRowsByPlace } from "../../helpers";
+import type { DesktopController } from "../../hooks/desktop/useDesktopController";
+import { Controls } from "./Controls";
 
-type LinuxFoldersProps = {
+type FoldersProps = {
   controller: DesktopController;
 };
 
-export function LinuxFolders({ controller }: LinuxFoldersProps) {
+export function Folders({ controller }: FoldersProps) {
   return (
     <>
       {controller.visibleSurfaceIds.map((folderId) => {
@@ -91,7 +91,7 @@ export function LinuxFolders({ controller }: LinuxFoldersProps) {
               onPointerUp={(event) => controller.handleFolderDragEnd(event, folder.id)}
               onPointerCancel={(event) => controller.handleFolderDragEnd(event, folder.id)}
             >
-              <LinuxControls
+              <Controls
                 closeLabel={`Close ${folder.name}`}
                 minimizeLabel={`Minimize ${folder.name}`}
                 maximizeLabel={`${isMaximized ? "Restore" : "Maximize"} ${folder.name}`}

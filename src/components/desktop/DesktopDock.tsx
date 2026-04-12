@@ -1,6 +1,6 @@
-import { FOLDERS } from "../constants";
-import type { DesktopController } from "../hooks/useDesktopController";
-import type { FolderId } from "../types";
+import { FOLDERS } from "../../constants";
+import type { DesktopController } from "../../hooks/desktop/useDesktopController";
+import type { FolderId } from "../../types";
 
 type DesktopDockProps = {
   controller: DesktopController;

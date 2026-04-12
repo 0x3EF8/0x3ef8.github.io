@@ -1,4 +1,4 @@
-import DesktopScene from "../features/desktop/DesktopScene";
+import DesktopScene from "../DesktopScene";
 
 export default function Home() {
   return <DesktopScene />;

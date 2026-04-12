@@ -10,8 +10,8 @@ import {
   TOP_PANEL_CLEARANCE,
   VIEWER_MIN_HEIGHT,
   VIEWER_MIN_WIDTH,
-} from "../constants";
-import { clamp, getFileExtension, getPathExtension } from "../helpers";
+} from "../../constants";
+import { clamp, getFileExtension, getPathExtension } from "../../helpers";
 import type {
   LinuxSurfaceId,
   DragState,
@@ -21,7 +21,7 @@ import type {
   ViewerContentStatus,
   LinuxSurfacePosition,
   LinuxSurfaceSize,
-} from "../types";
+} from "../../types";
 
 const VIM_EDITABLE_EXTENSIONS = new Set([
   "txt",
@@ -62,7 +62,7 @@ const VIM_EDITABLE_EXTENSIONS = new Set([
   "kt",
 ]);
 
-type UseLinuxViewerParams = {
+type UseViewerParams = {
   stageRef: RefObject<HTMLElement | null>;
   isCompactLayout: boolean;
   getSurfaceZIndex: (surfaceId: LinuxSurfaceId) => number;
@@ -71,14 +71,14 @@ type UseLinuxViewerParams = {
   openVimFile: (fileName: string, filePath: string) => void;
 };
 
-export function useLinuxViewer({
+export function useViewer({
   stageRef,
   isCompactLayout,
   getSurfaceZIndex,
   bringAnySurfaceToFront,
   removeSurfaceFromOrder,
   openVimFile,
-}: UseLinuxViewerParams) {
+}: UseViewerParams) {
   const viewerDragStateRef = useRef<DragState | null>(null);
   const viewerResizeStateRef = useRef<ResizeState | null>(null);
 
@@ -186,7 +186,7 @@ export function useLinuxViewer({
 
   const openPortfolioFile = (folderName: string, row: FileManagerRow) => {
     const profile = PORTFOLIO_FILE_PROFILES[row.name];
-    const mappedPath = profile?.realFilePath ?? "/files/system/file-missing.txt";
+    const mappedPath = profile?.realFilePath ?? "./files/system/file-missing.txt";
     const mappedExtension = getPathExtension(mappedPath);
     const sourceExtension = getFileExtension(row.name);
 

@@ -14,8 +14,8 @@ import {
   TERMINAL_MIN_HEIGHT,
   TERMINAL_MIN_WIDTH,
   TOP_PANEL_CLEARANCE,
-} from "../constants";
-import { clamp } from "../helpers";
+} from "../../constants";
+import { clamp } from "../../helpers";
 import type {
   LinuxSurfaceId,
   DragState,
@@ -25,10 +25,10 @@ import type {
   TerminalLineKind,
   LinuxSurfacePosition,
   LinuxSurfaceSize,
-} from "../types";
-import { executeTerminalCommand } from "./terminalCommandEngine";
+} from "../../types";
+import { executeTerminalCommand } from "../terminal/terminalCommandEngine";
 
-type UseLinuxTerminalParams = {
+type UseTerminalParams = {
   stageRef: RefObject<HTMLElement | null>;
   isCompactLayout: boolean;
   getSurfaceZIndex: (surfaceId: LinuxSurfaceId) => number;
@@ -38,7 +38,7 @@ type UseLinuxTerminalParams = {
   openVim: () => void;
 };
 
-export function useLinuxTerminal({
+export function useTerminal({
   stageRef,
   isCompactLayout,
   getSurfaceZIndex,
@@ -46,7 +46,7 @@ export function useLinuxTerminal({
   removeSurfaceFromOrder,
   openFolder,
   openVim,
-}: UseLinuxTerminalParams) {
+}: UseTerminalParams) {
   const terminalScrollRef = useRef<HTMLDivElement | null>(null);
   const terminalInputRef = useRef<HTMLInputElement | null>(null);
   const terminalLineIdRef = useRef(2);

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { useLinuxFolders } from "./useLinuxFolders";
-import { useLinuxTerminal } from "./useLinuxTerminal";
-import { useLinuxVim } from "./useLinuxVim";
-import { useLinuxViewer } from "./useLinuxViewer";
-import { useLinuxStack } from "./useLinuxStack";
+import { useFolders } from "../linux/useFolders";
+import { useTerminal } from "../linux/useTerminal";
+import { useVim } from "../linux/useVim";
+import { useViewer } from "../linux/useViewer";
+import { useStack } from "../linux/useStack";
 
 export function useDesktopController() {
   const stageRef = useRef<HTMLElement | null>(null);
@@ -38,16 +38,16 @@ export function useDesktopController() {
   }, []);
 
   const { activeSurfaceId, bringAnySurfaceToFront, removeSurfaceFromOrder, getSurfaceZIndex } =
-    useLinuxStack();
+    useStack();
 
-  const folderWindows = useLinuxFolders({
+  const folderWindows = useFolders({
     stageRef,
     isCompactLayout,
     bringAnySurfaceToFront,
     removeSurfaceFromOrder,
   });
 
-  const vimWindow = useLinuxVim({
+  const vimWindow = useVim({
     stageRef,
     isCompactLayout,
     getSurfaceZIndex,
@@ -55,7 +55,7 @@ export function useDesktopController() {
     removeSurfaceFromOrder,
   });
 
-  const terminalWindow = useLinuxTerminal({
+  const terminalWindow = useTerminal({
     stageRef,
     isCompactLayout,
     getSurfaceZIndex,
@@ -65,7 +65,7 @@ export function useDesktopController() {
     openVim: vimWindow.openVim,
   });
 
-  const viewerWindow = useLinuxViewer({
+  const viewerWindow = useViewer({
     stageRef,
     isCompactLayout,
     getSurfaceZIndex,

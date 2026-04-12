@@ -1,5 +1,5 @@
-import { FOLDERS } from "../constants";
-import type { FolderId } from "../types";
+import { FOLDERS } from "../../constants";
+import type { FolderId } from "../../types";
 
 type DesktopFoldersProps = {
   activeFolderId: FolderId;

@@ -12,12 +12,12 @@
     "sourceMap": false
   },
   "include": [
-    "src/features/desktop/constants.ts",
-    "src/features/desktop/helpers.ts",
-    "src/features/desktop/types.ts",
-    "src/features/desktop/hooks/terminalCommandEngine.ts",
-    "src/features/desktop/hooks/terminalCommandEngine.test.ts",
-    "src/features/desktop/hooks/terminalCommandEngine.edge.test.ts"
+    "src/constants.ts",
+    "src/helpers.ts",
+    "src/types.ts",
+    "src/hooks/terminal/terminalCommandEngine.ts",
+    "src/hooks/terminal/terminalCommandEngine.test.ts",
+    "src/hooks/terminal/terminalCommandEngine.edge.test.ts"
   ],
   "exclude": ["node_modules", ".next"]
 }

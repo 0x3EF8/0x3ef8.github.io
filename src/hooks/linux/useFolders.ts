@@ -10,8 +10,8 @@ import {
   MIN_WINDOW_WIDTH,
   SIDE_DOCK_CLEARANCE,
   TOP_PANEL_CLEARANCE,
-} from "../constants";
-import { clamp } from "../helpers";
+} from "../../constants";
+import { clamp } from "../../helpers";
 import type {
   LinuxSurfaceId,
   DragState,
@@ -21,21 +21,21 @@ import type {
   ResizeState,
   LinuxSurfacePosition,
   LinuxSurfaceSize,
-} from "../types";
+} from "../../types";
 
-type UseLinuxFoldersParams = {
+type UseFoldersParams = {
   stageRef: RefObject<HTMLElement | null>;
   isCompactLayout: boolean;
   bringAnySurfaceToFront: (surfaceId: LinuxSurfaceId) => void;
   removeSurfaceFromOrder: (surfaceId: LinuxSurfaceId) => void;
 };
 
-export function useLinuxFolders({
+export function useFolders({
   stageRef,
   isCompactLayout,
   bringAnySurfaceToFront,
   removeSurfaceFromOrder,
-}: UseLinuxFoldersParams) {
+}: UseFoldersParams) {
   const [activeFolderId, setActiveFolderId] = useState<FolderId>(FOLDERS[0].id);
 
   const [openFolderIds, setOpenFolderIds] = useState<FolderId[]>([]);

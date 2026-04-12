@@ -1,11 +1,11 @@
-import type { DesktopController } from "../hooks/useDesktopController";
-import { LinuxControls } from "./LinuxControls";
+import type { DesktopController } from "../../hooks/desktop/useDesktopController";
+import { Controls } from "./Controls";
 
-type LinuxVimProps = {
+type VimProps = {
   controller: DesktopController;
 };
 
-export function LinuxVim({ controller }: LinuxVimProps) {
+export function Vim({ controller }: VimProps) {
   const {
     activeSurfaceId,
     isVimVisible,
@@ -68,7 +68,7 @@ export function LinuxVim({ controller }: LinuxVimProps) {
         onPointerUp={handleVimDragEnd}
         onPointerCancel={handleVimDragEnd}
       >
-        <LinuxControls
+        <Controls
           closeLabel="Close vim"
           minimizeLabel="Minimize vim"
           maximizeLabel={isVimMaximized ? "Restore vim" : "Maximize vim"}

@@ -1,6 +1,6 @@
-import { ARCH_NEOFETCH_TEXT, FOLDERS, TERMINAL_COLOR_PRESETS } from "../constants";
-import { normalizeLabel } from "../helpers";
-import type { FolderId, TerminalLineKind } from "../types";
+import { ARCH_NEOFETCH_TEXT, FOLDERS, TERMINAL_COLOR_PRESETS } from "../../constants";
+import { normalizeLabel } from "../../helpers";
+import type { FolderId, TerminalLineKind } from "../../types";
 
 type TerminalCommandHandlers = {
   appendTerminalLines: (kind: TerminalLineKind, texts: string[]) => void;

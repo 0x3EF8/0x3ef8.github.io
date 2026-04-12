@@ -1,4 +1,4 @@
-type LinuxControlsProps = {
+type ControlsProps = {
   closeLabel: string;
   minimizeLabel: string;
   maximizeLabel: string;
@@ -7,14 +7,14 @@ type LinuxControlsProps = {
   onMaximize: () => void;
 };
 
-export function LinuxControls({
+export function Controls({
   closeLabel,
   minimizeLabel,
   maximizeLabel,
   onClose,
   onMinimize,
   onMaximize,
-}: LinuxControlsProps) {
+}: ControlsProps) {
   return (
     <div className="window-controls" role="group" aria-label="Window controls">
       <button

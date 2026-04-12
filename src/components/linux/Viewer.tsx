@@ -1,17 +1,21 @@
 import Image from "next/image";
-import type { DesktopController } from "../hooks/useDesktopController";
-import { LinuxControls } from "./LinuxControls";
+import type { DesktopController } from "../../hooks/desktop/useDesktopController";
+import { Controls } from "./Controls";
 
-type LinuxViewerProps = {
+type ViewerProps = {
   controller: DesktopController;
 };
 
-export function LinuxViewer({ controller }: LinuxViewerProps) {
+export function Viewer({ controller }: ViewerProps) {
   const openedFile = controller.openedFile;
 
   if (!openedFile) {
     return null;
   }
+
+  const normalizedImagePath = openedFile.path.startsWith("./")
+    ? `/${openedFile.path.slice(2)}`
+    : openedFile.path;
 
   return (
     <article
@@ -30,7 +34,7 @@ export function LinuxViewer({ controller }: LinuxViewerProps) {
         onPointerUp={controller.handleViewerDragEnd}
         onPointerCancel={controller.handleViewerDragEnd}
       >
-        <LinuxControls
+        <Controls
           closeLabel="Close file viewer"
           minimizeLabel="Minimize file viewer"
           maximizeLabel={controller.isViewerMaximized ? "Restore file viewer" : "Maximize file viewer"}
@@ -48,7 +52,7 @@ export function LinuxViewer({ controller }: LinuxViewerProps) {
           {controller.viewerIsImage ? (
             <Image
               className="viewer-image"
-              src={openedFile.path}
+              src={normalizedImagePath}
               alt={openedFile.title}
               fill
               sizes="(max-width: 900px) 82vw, 720px"

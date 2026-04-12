@@ -1,13 +1,13 @@
-import { TERMINAL_COLOR_PRESETS, TERMINAL_PROMPT } from "../constants";
-import type { DesktopController } from "../hooks/useDesktopController";
-import { TerminalOutput } from "./TerminalOutput";
-import { LinuxControls } from "./LinuxControls";
+import { TERMINAL_COLOR_PRESETS, TERMINAL_PROMPT } from "../../constants";
+import type { DesktopController } from "../../hooks/desktop/useDesktopController";
+import { TerminalOutput } from "../terminal/TerminalOutput";
+import { Controls } from "./Controls";
 
-type LinuxTerminalProps = {
+type TerminalProps = {
   controller: DesktopController;
 };
 
-export function LinuxTerminal({ controller }: LinuxTerminalProps) {
+export function Terminal({ controller }: TerminalProps) {
   const {
     activeSurfaceId,
     isTerminalMaximized,
@@ -52,7 +52,7 @@ export function LinuxTerminal({ controller }: LinuxTerminalProps) {
         onPointerUp={handleTerminalDragEnd}
         onPointerCancel={handleTerminalDragEnd}
       >
-        <LinuxControls
+        <Controls
           closeLabel="Close terminal"
           minimizeLabel="Minimize terminal"
           maximizeLabel={isTerminalMaximized ? "Restore terminal" : "Maximize terminal"}

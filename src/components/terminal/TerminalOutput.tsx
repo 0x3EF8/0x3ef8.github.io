@@ -1,4 +1,4 @@
-import type { TerminalColorPreset, TerminalLine } from "../types";
+import type { TerminalColorPreset, TerminalLine } from "../../types";
 
 type TerminalOutputProps = {
   lines: TerminalLine[];

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { LinuxSurfaceId } from "../types";
+import type { LinuxSurfaceId } from "../../types";
 
-export function useLinuxStack() {
+export function useStack() {
   const [activeSurfaceId, setActiveSurfaceId] = useState<LinuxSurfaceId | null>(null);
   const [surfaceOrder, setSurfaceOrder] = useState<LinuxSurfaceId[]>([]);
 

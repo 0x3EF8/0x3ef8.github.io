@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { DesktopDock } from "./components/DesktopDock";
-import { DesktopFolders } from "./components/DesktopFolders";
-import { DesktopTopBar } from "./components/DesktopTopBar";
-import { LinuxFolders } from "./components/LinuxFolders";
-import { LinuxTerminal } from "./components/LinuxTerminal";
-import { LinuxVim } from "./components/LinuxVim";
-import { LinuxViewer } from "./components/LinuxViewer";
-import { useDesktopController } from "./hooks/useDesktopController";
+import { DesktopDock } from "./components/desktop/DesktopDock";
+import { DesktopFolders } from "./components/desktop/DesktopFolders";
+import { DesktopTopBar } from "./components/desktop/DesktopTopBar";
+import { Folders } from "./components/linux/Folders";
+import { Terminal } from "./components/linux/Terminal";
+import { Vim } from "./components/linux/Vim";
+import { Viewer } from "./components/linux/Viewer";
+import { useDesktopController } from "./hooks/desktop/useDesktopController";
 
 export default function DesktopScene() {
   const controller = useDesktopController();
@@ -31,10 +31,10 @@ export default function DesktopScene() {
         <DesktopFolders activeFolderId={activeFolderId} onOpenFolder={openFolder} />
 
         <div className="window-layer" aria-live="polite">
-          <LinuxFolders controller={controller} />
-          {isTerminalVisible ? <LinuxTerminal controller={controller} /> : null}
-          {isVimVisible ? <LinuxVim controller={controller} /> : null}
-          {isViewerVisible ? <LinuxViewer controller={controller} /> : null}
+          <Folders controller={controller} />
+          {isTerminalVisible ? <Terminal controller={controller} /> : null}
+          {isVimVisible ? <Vim controller={controller} /> : null}
+          {isViewerVisible ? <Viewer controller={controller} /> : null}
         </div>
 
         <DesktopDock controller={controller} />

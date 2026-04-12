@@ -17,13 +17,19 @@ import {
   VIM_INITIAL_CONTENT,
   VIM_MIN_HEIGHT,
   VIM_MIN_WIDTH,
-} from "../constants";
-import { clamp } from "../helpers";
-import type { LinuxSurfaceId, DragState, ResizeState, LinuxSurfacePosition, LinuxSurfaceSize } from "../types";
+} from "../../constants";
+import { clamp } from "../../helpers";
+import type {
+  LinuxSurfaceId,
+  DragState,
+  ResizeState,
+  LinuxSurfacePosition,
+  LinuxSurfaceSize,
+} from "../../types";
 
 type VimMode = "NORMAL" | "INSERT" | "COMMAND";
 
-type UseLinuxVimParams = {
+type UseVimParams = {
   stageRef: RefObject<HTMLElement | null>;
   isCompactLayout: boolean;
   getSurfaceZIndex: (surfaceId: LinuxSurfaceId) => number;
@@ -33,13 +39,13 @@ type UseLinuxVimParams = {
 
 const VIM_FILE_NAME = "notes.md";
 
-export function useLinuxVim({
+export function useVim({
   stageRef,
   isCompactLayout,
   getSurfaceZIndex,
   bringAnySurfaceToFront,
   removeSurfaceFromOrder,
-}: UseLinuxVimParams) {
+}: UseVimParams) {
   const vimEditorRef = useRef<HTMLTextAreaElement | null>(null);
   const vimCommandInputRef = useRef<HTMLInputElement | null>(null);
   const vimLineNumbersRef = useRef<HTMLOListElement | null>(null);
