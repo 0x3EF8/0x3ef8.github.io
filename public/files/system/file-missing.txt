@@ -1,0 +1,2 @@
+This file is not linked yet.
+Please update the portfolio file mapping in src/app/page.tsx.
