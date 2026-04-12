@@ -16,8 +16,8 @@
     "src/helpers.ts",
     "src/types.ts",
     "src/hooks/terminal/terminalCommandEngine.ts",
-    "src/hooks/terminal/terminalCommandEngine.test.ts",
-    "src/hooks/terminal/terminalCommandEngine.edge.test.ts"
+    "test/terminalCommandEngine.test.ts",
+    "test/terminalCommandEngine.edge.test.ts"
   ],
   "exclude": ["node_modules", ".next"]
 }

@@ -164,7 +164,7 @@ export const DEFAULT_VIM_WIDTH = 700;
 export const DEFAULT_VIM_HEIGHT = 460;
 export const DOCK_CLEARANCE = 18;
 export const TOP_PANEL_CLEARANCE = 36;
-export const SIDE_DOCK_CLEARANCE = 68;
+export const SIDE_DOCK_CLEARANCE = 8;
 export const TERMINAL_PROMPT = "linuxiac@arch:~$";
 
 export const VIM_INITIAL_CONTENT = [

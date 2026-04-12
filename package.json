@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test:clean": "node -e \"require('node:fs').rmSync('.tmp-tests', { recursive: true, force: true })\"",
     "test:build": "tsc -p tsconfig.test.json",
-    "test": "npm run test:clean && npm run test:build && node --test .tmp-tests/src/hooks/terminal/terminalCommandEngine.test.js .tmp-tests/src/hooks/terminal/terminalCommandEngine.edge.test.js && npm run test:clean"
+    "test": "npm run test:clean && npm run test:build && node --test .tmp-tests/test/terminalCommandEngine.test.js .tmp-tests/test/terminalCommandEngine.edge.test.js && npm run test:clean"
   },
   "dependencies": {
     "next": "16.2.3",
