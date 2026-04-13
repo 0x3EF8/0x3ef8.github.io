@@ -44,6 +44,9 @@ export type FileManagerRow = {
   size: string;
   modified: string;
   tone: FileTone;
+  path?: string;
+  title?: string;
+  summary?: string;
 };
 
 export type FileManagerPlace = "home" | "desktop" | "documents" | "downloads" | "favorites";

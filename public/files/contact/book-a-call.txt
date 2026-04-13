@@ -1,6 +1,0 @@
-To book a call:
-1. Share your project scope.
-2. Include your preferred schedule in GMT+8.
-3. Add timeline and budget range.
-
-Email: hello@jayfiles.dev

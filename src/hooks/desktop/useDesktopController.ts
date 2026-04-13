@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useFolders } from "../linux/useFolders";
+import { useFileExplorerWindows } from "../linux/useFileExplorerWindows";
 import { useTerminal } from "../linux/useTerminal";
 import { useVim } from "../linux/useVim";
 import { useViewer } from "../linux/useViewer";
@@ -40,7 +40,7 @@ export function useDesktopController() {
   const { activeSurfaceId, bringAnySurfaceToFront, removeSurfaceFromOrder, getSurfaceZIndex } =
     useStack();
 
-  const folderWindows = useFolders({
+  const fileExplorerWindows = useFileExplorerWindows({
     stageRef,
     isCompactLayout,
     bringAnySurfaceToFront,
@@ -61,7 +61,7 @@ export function useDesktopController() {
     getSurfaceZIndex,
     bringAnySurfaceToFront,
     removeSurfaceFromOrder,
-    openFolder: folderWindows.openFolder,
+    openFolder: fileExplorerWindows.openFolder,
     openVim: vimWindow.openVim,
   });
 
@@ -81,7 +81,7 @@ export function useDesktopController() {
     activeSurfaceId,
     getSurfaceZIndex,
     bringAnySurfaceToFront,
-    ...folderWindows,
+    ...fileExplorerWindows,
     ...vimWindow,
     ...terminalWindow,
     ...viewerWindow,

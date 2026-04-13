@@ -9,6 +9,64 @@ type ViewerProps = {
 export function Viewer({ controller }: ViewerProps) {
   const openedFile = controller.openedFile;
 
+  const applyViewerScrollbarTheme = (iframe: HTMLIFrameElement) => {
+    try {
+      const doc = iframe.contentDocument;
+      if (!doc) {
+        return;
+      }
+
+      if (doc.getElementById("viewer-scrollbar-theme")) {
+        return;
+      }
+
+      const style = doc.createElement("style");
+      style.id = "viewer-scrollbar-theme";
+      style.textContent = `
+        :root {
+          --viewer-scrollbar-track: rgba(18, 22, 30, 0.72);
+          --viewer-scrollbar-thumb: rgba(184, 196, 217, 0.42);
+          --viewer-scrollbar-thumb-hover: rgba(214, 225, 242, 0.58);
+        }
+
+        html,
+        body {
+          scrollbar-width: thin;
+          scrollbar-color: var(--viewer-scrollbar-thumb) var(--viewer-scrollbar-track);
+        }
+
+        *::-webkit-scrollbar {
+          width: 0.68rem;
+          height: 0.68rem;
+        }
+
+        *::-webkit-scrollbar-track {
+          border-radius: 999px;
+          background: var(--viewer-scrollbar-track);
+        }
+
+        *::-webkit-scrollbar-thumb {
+          border: 2px solid var(--viewer-scrollbar-track);
+          border-radius: 999px;
+          background: var(--viewer-scrollbar-thumb);
+        }
+
+        *::-webkit-scrollbar-thumb:hover {
+          background: var(--viewer-scrollbar-thumb-hover);
+        }
+      `;
+
+      const styleHost = doc.head ?? doc.documentElement;
+      styleHost.appendChild(style);
+    } catch {
+      // Ignore cross-origin frames and keep the viewer functional.
+    }
+  };
+
+  const handleFrameLoad = (event: React.SyntheticEvent<HTMLIFrameElement>) => {
+    applyViewerScrollbarTheme(event.currentTarget);
+  };
+
   if (!openedFile) {
     return null;
   }
@@ -79,6 +137,7 @@ export function Viewer({ controller }: ViewerProps) {
               className="viewer-frame"
               src={openedFile.path}
               title={openedFile.title}
+              onLoad={handleFrameLoad}
             />
           ) : null}
 
@@ -88,6 +147,7 @@ export function Viewer({ controller }: ViewerProps) {
               className="viewer-frame"
               src={openedFile.path}
               title={openedFile.title}
+              onLoad={handleFrameLoad}
             />
           ) : null}
         </div>

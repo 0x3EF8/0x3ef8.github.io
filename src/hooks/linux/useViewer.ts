@@ -186,13 +186,17 @@ export function useViewer({
 
   const openPortfolioFile = (folderName: string, row: FileManagerRow) => {
     const profile = PORTFOLIO_FILE_PROFILES[row.name];
-    const mappedPath = profile?.realFilePath ?? "./files/system/file-missing.txt";
+    const mappedPath = row.path ?? profile?.realFilePath ?? "./files/system/file-missing.txt";
     const mappedExtension = getPathExtension(mappedPath);
     const sourceExtension = getFileExtension(row.name);
+    const mappedIsHtml = HTML_FILE_EXTENSIONS.includes(mappedExtension);
+    const isApiPath = mappedPath.startsWith("/api/");
 
-    const shouldOpenInVim = sourceExtension
-      ? VIM_EDITABLE_EXTENSIONS.has(sourceExtension)
-      : VIM_EDITABLE_EXTENSIONS.has(mappedExtension);
+    const shouldOpenInVim = !mappedIsHtml &&
+      !isApiPath &&
+      (sourceExtension
+        ? VIM_EDITABLE_EXTENSIONS.has(sourceExtension)
+        : VIM_EDITABLE_EXTENSIONS.has(mappedExtension));
 
     if (shouldOpenInVim) {
       openVimFile(row.name, mappedPath);
@@ -213,8 +217,8 @@ export function useViewer({
       folderName,
       name: row.name,
       kind: row.kind,
-      title: profile?.title ?? row.name,
-      summary: profile?.summary ?? "Portfolio file preview.",
+      title: row.title ?? profile?.title ?? row.name,
+      summary: row.summary ?? profile?.summary ?? "Portfolio file preview.",
       path: mappedPath,
     };
 

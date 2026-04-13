@@ -105,6 +105,275 @@ body {
   animation: riseIn 0.75s ease;
 }
 
+.desktop-widget-rail {
+  position: absolute;
+  left: clamp(0.8rem, 1.8vw, 1.35rem);
+  top: 2.25rem;
+  width: clamp(180px, 17vw, 250px);
+  z-index: 6;
+  pointer-events: auto;
+}
+
+.desktop-widget {
+  border-radius: 0.56rem;
+  border: 1px solid rgba(142, 154, 174, 0.34);
+  background: linear-gradient(165deg, rgba(24, 28, 36, 0.9), rgba(16, 20, 28, 0.85));
+  box-shadow:
+    0 1rem 1.8rem rgba(8, 10, 14, 0.42),
+    0 0 0 1px rgba(235, 241, 251, 0.08);
+  backdrop-filter: blur(7px);
+  padding: 0.58rem 0.65rem 0.66rem;
+}
+
+.desktop-widget-header.is-compact {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.desktop-widget-header {
+  margin-bottom: 0.42rem;
+}
+
+.desktop-widget-eyebrow {
+  margin: 0;
+  font-size: 0.52rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(194, 206, 228, 0.7);
+}
+
+.desktop-widget-title {
+  margin: 0.08rem 0 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: rgba(236, 242, 252, 0.95);
+}
+
+.desktop-widget-badge {
+  margin: 0.08rem 0 0;
+  border: 1px solid rgba(162, 238, 198, 0.45);
+  border-radius: 999px;
+  padding: 0.14rem 0.32rem;
+  color: rgba(182, 246, 210, 0.92);
+  background: rgba(46, 104, 82, 0.28);
+  font-size: 0.48rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.desktop-widget-content {
+  display: grid;
+  gap: 0.32rem;
+}
+
+.desktop-widget-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.34rem;
+}
+
+.desktop-widget-kpi-card {
+  display: grid;
+  gap: 0.08rem;
+  border-radius: 0.38rem;
+  padding: 0.36rem 0.42rem;
+  border: 1px solid rgba(160, 177, 202, 0.28);
+  background: rgba(15, 20, 30, 0.66);
+}
+
+.desktop-widget-row {
+  display: grid;
+  gap: 0.08rem;
+}
+
+.desktop-widget-row.is-split .desktop-widget-value {
+  line-height: 1.45;
+}
+
+.desktop-widget-label {
+  font-size: 0.56rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(192, 205, 227, 0.7);
+}
+
+.desktop-widget-value {
+  font-size: 0.66rem;
+  line-height: 1.32;
+  color: rgba(237, 243, 253, 0.95);
+  font-weight: 600;
+}
+
+.desktop-widget-language-list {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.desktop-widget-language-item {
+  display: grid;
+  gap: 0.14rem;
+}
+
+.desktop-widget-language-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+  color: rgba(229, 237, 251, 0.88);
+  font-size: 0.58rem;
+  line-height: 1.32;
+}
+
+.desktop-widget-language-head span:last-child {
+  color: rgba(190, 204, 229, 0.8);
+}
+
+.desktop-widget-meter {
+  width: 100%;
+  height: 0.26rem;
+  border-radius: 999px;
+  background: rgba(74, 86, 108, 0.46);
+  overflow: hidden;
+}
+
+.desktop-widget-meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(93, 164, 255, 0.95), rgba(126, 216, 255, 0.92));
+}
+
+.desktop-widget-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.desktop-widget-updated {
+  margin: 0;
+  font-size: 0.54rem;
+  letter-spacing: 0.04em;
+  color: rgba(182, 196, 220, 0.75);
+}
+
+.desktop-widget-status {
+  margin: 0;
+  font-size: 0.54rem;
+  color: rgba(170, 199, 234, 0.84);
+}
+
+.desktop-widget-message-wrap {
+  display: grid;
+  gap: 0.34rem;
+}
+
+.desktop-widget-loading {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.desktop-widget-skeleton {
+  height: 0.45rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(65, 77, 98, 0.52),
+    rgba(96, 111, 137, 0.65),
+    rgba(65, 77, 98, 0.52)
+  );
+  background-size: 190% 100%;
+  animation: widgetPulse 1.4s ease infinite;
+}
+
+.desktop-widget-skeleton.short {
+  width: 62%;
+}
+
+.desktop-widget-message {
+  margin: 0;
+  font-size: 0.63rem;
+  line-height: 1.4;
+  color: rgba(214, 224, 241, 0.84);
+}
+
+.desktop-widget-message.is-error {
+  color: #ffb7b7;
+}
+
+.desktop-widget-refresh {
+  border: 1px solid rgba(214, 224, 240, 0.35);
+  border-radius: 0.34rem;
+  padding: 0.28rem 0.42rem;
+  background: rgba(23, 28, 37, 0.88);
+  color: rgba(236, 241, 249, 0.9);
+  font-family: inherit;
+  font-size: 0.56rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.desktop-widget-refresh:disabled {
+  opacity: 0.68;
+  cursor: progress;
+}
+
+.desktop-widget-refresh:hover {
+  background: rgba(33, 40, 53, 0.93);
+}
+
+.desktop-widget-refresh:focus-visible {
+  outline: 1px solid rgba(236, 241, 249, 0.9);
+  outline-offset: 1px;
+}
+
+@keyframes widgetPulse {
+  0% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@keyframes githubToastEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes githubToastPulse {
+  0% {
+    transform: translateY(0);
+    box-shadow:
+      0 1rem 2rem rgba(8, 10, 14, 0.42),
+      0 0 0 1px rgba(238, 242, 250, 0.07);
+  }
+
+  50% {
+    transform: translateY(-1px);
+    box-shadow:
+      0 1.35rem 2.3rem rgba(8, 10, 14, 0.52),
+      0 0 0 1px rgba(214, 225, 242, 0.23);
+  }
+
+  100% {
+    transform: translateY(0);
+    box-shadow:
+      0 1rem 2rem rgba(8, 10, 14, 0.42),
+      0 0 0 1px rgba(238, 242, 250, 0.07);
+  }
+}
+
 .linux-topbar {
   position: absolute;
   top: 0;
@@ -119,6 +388,201 @@ body {
   padding: 0 0.6rem;
   background: linear-gradient(180deg, rgba(8, 10, 13, 0.95), rgba(8, 10, 13, 0.88));
   border-bottom: 1px solid rgba(204, 212, 228, 0.18);
+}
+
+.desktop-github-toast {
+  position: absolute;
+  top: 2.08rem;
+  right: 0.92rem;
+  z-index: 24;
+  width: min(17.6rem, calc(100vw - 1.45rem));
+  border-radius: 0.56rem;
+  border: 1px solid rgba(142, 158, 183, 0.4);
+  background: linear-gradient(165deg, rgba(24, 30, 40, 0.92), rgba(16, 22, 32, 0.9));
+  box-shadow:
+    0 1rem 2rem rgba(8, 10, 14, 0.42),
+    0 0 0 1px rgba(238, 242, 250, 0.07);
+  backdrop-filter: blur(8px);
+  padding: 0.48rem 0.54rem;
+  pointer-events: auto;
+  animation: githubToastEnter 0.24s ease;
+}
+
+.desktop-github-toast.is-popping {
+  animation: githubToastPulse 0.42s ease;
+}
+
+.desktop-github-toast-eyebrow {
+  margin: 0;
+  font-size: 0.5rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: rgba(184, 202, 231, 0.84);
+}
+
+.desktop-github-toast-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.46rem;
+}
+
+.desktop-github-toast-close {
+  border: 1px solid rgba(214, 224, 240, 0.32);
+  border-radius: 0.28rem;
+  width: 1.02rem;
+  height: 1.02rem;
+  padding: 0;
+  background: rgba(23, 28, 37, 0.72);
+  color: rgba(229, 236, 249, 0.9);
+  font-family: inherit;
+  font-size: 0.7rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.desktop-github-toast-close:hover {
+  background: rgba(33, 40, 53, 0.9);
+}
+
+.desktop-github-toast-close:focus-visible {
+  outline: 1px solid rgba(236, 241, 249, 0.9);
+  outline-offset: 1px;
+}
+
+.desktop-github-toast-loading {
+  margin-top: 0.42rem;
+  display: grid;
+  gap: 0.26rem;
+}
+
+.desktop-github-toast-skeleton {
+  display: block;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(65, 77, 98, 0.52),
+    rgba(96, 111, 137, 0.65),
+    rgba(65, 77, 98, 0.52)
+  );
+  background-size: 190% 100%;
+  animation: widgetPulse 1.4s ease infinite;
+}
+
+.desktop-github-toast-skeleton.short {
+  width: 64%;
+}
+
+.desktop-github-toast-error-wrap {
+  margin-top: 0.4rem;
+  display: grid;
+  gap: 0.36rem;
+}
+
+.desktop-github-toast-content {
+  margin-top: 0.36rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.desktop-github-toast-title {
+  margin: 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(238, 244, 253, 0.95);
+}
+
+.desktop-github-toast-detail {
+  margin: 0;
+  color: rgba(222, 232, 247, 0.88);
+  font-size: 0.61rem;
+  line-height: 1.46;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.desktop-github-toast-meta {
+  margin: 0;
+  color: rgba(188, 205, 230, 0.78);
+  font-size: 0.56rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.desktop-github-toast-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.desktop-github-toast-link {
+  color: rgba(164, 214, 255, 0.95);
+  font-size: 0.57rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.desktop-github-toast-link:hover {
+  text-decoration: underline;
+}
+
+.desktop-github-toast-link:focus-visible {
+  outline: 1px solid rgba(229, 236, 249, 0.92);
+  outline-offset: 1px;
+  border-radius: 0.2rem;
+}
+
+.desktop-github-toast-refresh {
+  border: 1px solid rgba(214, 224, 240, 0.35);
+  border-radius: 0.34rem;
+  padding: 0.24rem 0.42rem;
+  background: rgba(23, 28, 37, 0.88);
+  color: rgba(236, 241, 249, 0.9);
+  font-family: inherit;
+  font-size: 0.57rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.desktop-github-toast-refresh:hover {
+  background: rgba(33, 40, 53, 0.93);
+}
+
+.desktop-github-toast-refresh:disabled {
+  opacity: 0.68;
+  cursor: progress;
+}
+
+.desktop-github-toast-refresh:focus-visible {
+  outline: 1px solid rgba(236, 241, 249, 0.9);
+  outline-offset: 1px;
+}
+
+.desktop-github-toast-sync,
+.desktop-github-toast-message {
+  margin: 0;
+  font-size: 0.54rem;
+  line-height: 1.4;
+}
+
+.desktop-github-toast-sync {
+  color: rgba(172, 193, 224, 0.78);
+}
+
+.desktop-github-toast-message {
+  color: rgba(214, 224, 241, 0.84);
+}
+
+.desktop-github-toast-message.is-error {
+  color: #ffb7b7;
 }
 
 .linux-topbar-left,
@@ -537,12 +1001,13 @@ body {
 }
 
 .folder-window.is-maximized {
-  left: 4.4rem !important;
+  left: 0 !important;
   top: 2.2rem !important;
-  right: auto !important;
-  width: calc(100% - 5.2rem);
+  right: 0 !important;
+  bottom: 0 !important;
+  width: auto;
   max-width: none;
-  height: calc(100% - 3rem);
+  height: auto;
 }
 
 .folder-window.is-maximized .folder-window-body {
@@ -647,6 +1112,28 @@ body {
   color: rgba(226, 233, 247, 0.86);
 }
 
+.file-manager-crumb-btn {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: rgba(226, 233, 247, 0.86);
+  font-family: inherit;
+  font-size: 0.6rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.file-manager-crumb-btn:hover {
+  color: rgba(242, 247, 255, 0.98);
+  text-decoration: underline;
+}
+
+.file-manager-crumb-btn:focus-visible {
+  outline: 1px solid rgba(229, 236, 249, 0.88);
+  outline-offset: 1px;
+  border-radius: 0.16rem;
+}
+
 .file-manager-crumb.current {
   color: rgba(242, 246, 253, 0.97);
 }
@@ -684,6 +1171,40 @@ body {
 
 .file-manager-view-btn.is-active {
   background: rgba(236, 241, 249, 0.19);
+}
+
+.file-manager-filterbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  border-radius: 0.38rem;
+  padding: 0.12rem 0.28rem;
+  border: 1px solid rgba(196, 207, 228, 0.24);
+  background: rgba(12, 14, 19, 0.45);
+}
+
+.file-manager-filter-label {
+  color: rgba(214, 223, 238, 0.74);
+  font-size: 0.54rem;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+}
+
+.file-manager-filter-select {
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: rgba(232, 238, 249, 0.9);
+  font-family: inherit;
+  font-size: 0.56rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  cursor: pointer;
+}
+
+.file-manager-filter-select option {
+  background: #151b24;
+  color: #edf2fc;
 }
 
 .file-manager-searchbox {
@@ -729,6 +1250,28 @@ body {
   flex: 1;
   min-height: 0;
   overflow: hidden;
+}
+
+.file-manager-pane-splitter {
+  display: none;
+}
+
+@container (min-width: 620px) {
+  .file-manager-pane-splitter {
+    display: block;
+    border: 0;
+    width: 6px;
+    margin: 0;
+    padding: 0;
+    cursor: col-resize;
+    background: rgba(88, 102, 127, 0.34);
+  }
+
+  .file-manager-pane-splitter:hover,
+  .file-manager-pane-splitter:focus-visible {
+    background: rgba(150, 182, 229, 0.5);
+    outline: none;
+  }
 }
 
 .file-manager-sidebar {
@@ -1100,6 +1643,10 @@ body {
   .file-manager-nav-group,
   .file-manager-location,
   .file-manager-view-switch {
+    display: none;
+  }
+
+  .file-manager-filter-label {
     display: none;
   }
 
@@ -2028,10 +2575,20 @@ body {
     min-height: 100vh;
   }
 
+  .desktop-widget-rail {
+    display: none;
+  }
+
   .linux-topbar {
     grid-template-columns: auto 1fr auto;
     height: 1.58rem;
     padding: 0 0.45rem;
+  }
+
+  .desktop-github-toast {
+    top: 1.9rem;
+    right: 0.62rem;
+    width: min(16.2rem, calc(100vw - 0.95rem));
   }
 
   .linux-panel-item,
@@ -2175,6 +2732,26 @@ body {
     padding: 0 0.38rem;
   }
 
+  .desktop-github-toast {
+    top: 1.82rem;
+    right: 0.42rem;
+    width: min(15.2rem, calc(100vw - 0.76rem));
+    padding: 0.46rem 0.48rem;
+  }
+
+  .desktop-github-toast-title {
+    font-size: 0.68rem;
+  }
+
+  .desktop-github-toast-detail,
+  .desktop-github-toast-meta,
+  .desktop-github-toast-link,
+  .desktop-github-toast-refresh,
+  .desktop-github-toast-sync,
+  .desktop-github-toast-message {
+    font-size: 0.56rem;
+  }
+
   .linux-panel-item,
   .linux-panel-button,
   .linux-topbar-center {
@@ -2246,6 +2823,10 @@ body {
   .file-manager-nav-group,
   .file-manager-location,
   .file-manager-view-switch {
+    display: none;
+  }
+
+  .file-manager-filter-label {
     display: none;
   }
 

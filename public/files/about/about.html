@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About | 0x3EF8</title>
+    <style>
+      :root {
+        --bg: #0f1420;
+        --text: #eef3fc;
+        --muted: #adbdd6;
+        --line: rgba(147, 166, 196, 0.34);
+        --accent: #5cbcff;
+        --accent-strong: #309ff4;
+        --success: #34d17f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(1200px 640px at 88% -14%, rgba(201, 209, 223, 0.12), transparent 60%),
+          radial-gradient(860px 520px at -8% 108%, rgba(128, 139, 160, 0.11), transparent 62%),
+          linear-gradient(180deg, #1a1e26 0%, #161a22 100%);
+        color: var(--text);
+        font-family: "Space Grotesk", "Sora", "Segoe UI", sans-serif;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          radial-gradient(rgba(182, 192, 209, 0.12) 0.6px, transparent 0.6px),
+          repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.022) 0,
+            rgba(255, 255, 255, 0.022) 1px,
+            transparent 1px,
+            transparent 2px
+          );
+        background-size:
+          22px 22px,
+          auto;
+        opacity: 0.24;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 1rem 1rem 2.2rem;
+      }
+
+      .shell-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+        color: #c2d2ee;
+        font-size: 0.69rem;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "Consolas", monospace;
+      }
+
+      .shell-top strong {
+        color: #95d8ff;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        border: 1px solid rgba(126, 149, 184, 0.32);
+        border-radius: 999px;
+        padding: 0.15rem 0.5rem;
+        background: rgba(13, 19, 30, 0.5);
+      }
+
+      .status-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: var(--success);
+        box-shadow: 0 0 0.6rem rgba(53, 212, 130, 0.5);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(250px, 0.85fr);
+        gap: 1.05rem;
+        align-items: start;
+        padding-bottom: 1.05rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        margin: 0;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #96bee6;
+      }
+
+      h1 {
+        margin: 0.44rem 0 0;
+        font-size: clamp(1.7rem, 4.1vw, 2.9rem);
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+      }
+
+      .lead {
+        margin: 0.72rem 0 0;
+        max-width: 56ch;
+        color: #d5e3f8;
+        line-height: 1.7;
+        font-size: 1rem;
+      }
+
+      .actions {
+        margin-top: 0.9rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.52rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.48rem;
+        padding: 0.5rem 0.72rem;
+        text-decoration: none;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border: 1px solid transparent;
+        transition: transform 0.16s ease, filter 0.16s ease;
+      }
+
+      .btn.primary {
+        background: linear-gradient(125deg, var(--accent-strong), #5fc6ff);
+        color: #031321;
+        font-weight: 700;
+      }
+
+      .btn.ghost {
+        border-color: rgba(163, 183, 213, 0.42);
+        color: #dbe8fb;
+        background: rgba(16, 24, 37, 0.42);
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.03);
+      }
+
+      .hero-side {
+        justify-self: end;
+        width: min(100%, 320px);
+      }
+
+      .avatar-shell {
+        position: relative;
+        width: 132px;
+        height: 160px;
+        border-radius: 0.9rem;
+        border: 2px solid rgba(137, 165, 208, 0.66);
+        box-shadow: 0 0 1rem rgba(91, 146, 224, 0.35);
+        overflow: hidden;
+        margin: 0 0 0.78rem auto;
+      }
+
+      .avatar-shell img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+      }
+
+      .availability-dot {
+        position: absolute;
+        right: 0.3rem;
+        bottom: 0.3rem;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        border: 2px solid #07111c;
+        background: #35d482;
+      }
+
+      .quick-meta {
+        margin: 0;
+        display: grid;
+        gap: 0.38rem;
+      }
+
+      .quick-meta p {
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.7rem;
+        color: #cfddf5;
+        font-size: 0.82rem;
+        padding-bottom: 0.32rem;
+        border-bottom: 1px solid rgba(138, 153, 178, 0.2);
+      }
+
+      .quick-meta span {
+        color: #95aeca;
+      }
+
+      .code-block {
+        margin: 1rem 0 0;
+        padding: 0.82rem 0.9rem;
+        border-radius: 0.48rem;
+        border: 1px solid rgba(142, 154, 174, 0.26);
+        background: rgba(16, 21, 30, 0.5);
+        color: #d8e6fa;
+        font-family: "JetBrains Mono", "Consolas", monospace;
+        font-size: 0.8rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .section {
+        margin-top: 1.05rem;
+      }
+
+      h2 {
+        margin: 0 0 0.74rem;
+        font-size: 0.84rem;
+        letter-spacing: 0.12em;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #b4c4de;
+      }
+
+      .expertise-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8rem;
+      }
+
+      .expertise-item {
+        padding: 0 0.2rem 0 0;
+        border-top: 1px solid rgba(138, 153, 178, 0.34);
+      }
+
+      .expertise-item h3 {
+        margin: 0.64rem 0 0;
+        font-size: 0.97rem;
+      }
+
+      .expertise-item p {
+        margin: 0.46rem 0 0;
+        color: #d1def3;
+        font-size: 0.88rem;
+      }
+
+      .experience-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+        gap: 1rem;
+      }
+
+      .experience-main {
+        padding-right: 0.4rem;
+      }
+
+      .meta {
+        margin: 0 0 0.55rem;
+        color: var(--muted);
+        font-size: 0.83rem;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 1.12rem;
+        line-height: 1.2;
+      }
+
+      .org {
+        margin: 0.18rem 0 0.72rem;
+        color: #9ec6ff;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      p,
+      li {
+        color: rgba(224, 231, 244, 0.92);
+        line-height: 1.7;
+      }
+
+      ul {
+        margin: 0.42rem 0 0;
+        padding-left: 1.15rem;
+      }
+
+      .timeline-wrap {
+        border-left: 1px solid rgba(138, 153, 178, 0.34);
+        padding-left: 0.88rem;
+      }
+
+      .chip-row {
+        margin-top: 0.72rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.48rem;
+      }
+
+      .chip {
+        border-radius: 999px;
+        border: 1px solid rgba(142, 154, 174, 0.3);
+        padding: 0.2rem 0.6rem;
+        background: rgba(18, 25, 36, 0.45);
+        color: rgba(228, 235, 247, 0.9);
+        font-size: 0.76rem;
+      }
+
+      .timeline {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .timeline li {
+        margin: 0;
+        padding: 0 0 0.2rem;
+      }
+
+      .timeline .time {
+        display: block;
+        margin-bottom: 0.22rem;
+        color: #90adcf;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .metrics {
+        margin-top: 0;
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 0.7rem;
+        border-top: 1px solid var(--line);
+        padding-top: 0.8rem;
+      }
+
+      .metric {
+        min-width: 0;
+      }
+
+      .metric-label {
+        display: block;
+        color: rgba(182, 197, 219, 0.82);
+        font-size: 0.68rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .metric-value {
+        display: block;
+        margin-top: 0.2rem;
+        font-size: 1.02rem;
+        font-weight: 700;
+        color: rgba(236, 242, 252, 0.95);
+        overflow-wrap: anywhere;
+      }
+
+      .cta {
+        margin-top: 1rem;
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .cta h2 {
+        margin-bottom: 0.42rem;
+      }
+
+      .cta p {
+        margin: 0;
+        color: #d4e3f8;
+      }
+
+      .cta .actions {
+        margin-top: 0.8rem;
+      }
+
+      @media (max-width: 980px) {
+        main {
+          padding: 1rem 0.85rem 2rem;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-side {
+          justify-self: start;
+          width: 100%;
+        }
+
+        .avatar-shell {
+          margin-left: 0;
+        }
+
+        .expertise-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .experience-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .metrics {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 760px) {
+        .shell-top {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.35rem;
+          font-size: 0.62rem;
+        }
+
+        .avatar-shell {
+          width: 104px;
+          height: 128px;
+        }
+
+        .code-block {
+          font-size: 0.8rem;
+        }
+
+        .expertise-grid,
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .experience-grid {
+          gap: 0.7rem;
+        }
+
+        .timeline-wrap {
+          padding-left: 0.72rem;
+        }
+      }
+
+      @media (max-width: 520px) {
+        main {
+          padding: 0.78rem 0.65rem 1.6rem;
+        }
+
+        h1 {
+          font-size: 1.45rem;
+        }
+
+        h2 {
+          font-size: 1rem;
+        }
+
+        h3 {
+          font-size: 1.12rem;
+        }
+
+        .role-card {
+          padding: 0.74rem 0.76rem;
+        }
+
+        .chip {
+          font-size: 0.7rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="shell-top">
+        <p><strong>0x3EF8</strong> ~/portfolio/about</p>
+        <p class="status"><span class="status-dot"></span> Available now</p>
+      </header>
+
+      <section class="hero" aria-label="Profile summary">
+        <article>
+          <p class="eyebrow">Full-Stack Product Engineer</p>
+          <h1>Jay Patrick Cano</h1>
+          <p class="lead">
+            I design and build modern web products that are clean, scalable, and aligned with
+            business goals. My work blends product thinking, strong execution, and long-term
+            maintainability.
+          </p>
+          <div class="actions">
+            <a class="btn primary" href="https://jaypatrickcano.vercel.app">View Portfolio</a>
+            <a class="btn ghost" href="https://github.com/0x3ef8">Explore GitHub</a>
+          </div>
+
+            <pre class="code-block">const profile = {
+          specialty: "Web products and internal platforms",
+          approach: "Clarity, performance, maintainability",
+          availability: "Open to selected collaborations"
+        }</pre>
+        </article>
+
+        <aside class="hero-side">
+          <figure class="avatar-shell">
+            <img src="/pat.png" alt="Jay Patrick Cano" />
+            <span class="availability-dot" aria-hidden="true"></span>
+          </figure>
+          <div class="quick-meta">
+            <p><span>Alias</span> 0x3EF8</p>
+            <p><span>Focus</span> Full-stack systems</p>
+            <p><span>Timezone</span> GMT+8</p>
+            <p><span>Response</span> Within 24 hours</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section">
+        <h2>Core Expertise</h2>
+        <div class="expertise-grid">
+          <article class="expertise-item">
+            <h3>Product Engineering</h3>
+            <p>From concept to deployment with robust architecture and scalable implementation.</p>
+          </article>
+          <article class="expertise-item">
+            <h3>UI Systems</h3>
+            <p>Reusable component-driven interfaces focused on usability and visual consistency.</p>
+          </article>
+          <article class="expertise-item">
+            <h3>Delivery Discipline</h3>
+            <p>Quality-focused workflows with testing, code standards, and reliable releases.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Experience</h2>
+        <div class="experience-grid">
+          <article class="experience-main">
+            <p class="meta">July 2024 - Present | Remote/Hybrid</p>
+            <h3>Founder and Full-Stack Developer</h3>
+            <p class="org">CodeTrial Solutions</p>
+            <ul>
+              <li>Builds digital products for startups, businesses, and private clients.</li>
+              <li>Leads planning, implementation, and optimization across frontend and backend.</li>
+              <li>Improves product quality through debugging, automation, and QA discipline.</li>
+              <li>Ships maintainable solutions with clear documentation and handoff.</li>
+            </ul>
+            <div class="chip-row" aria-label="Primary stack">
+              <span class="chip">React</span>
+              <span class="chip">Vue.js</span>
+              <span class="chip">Node.js</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">HTML5</span>
+            </div>
+          </article>
+
+          <aside class="timeline-wrap">
+            <h3>Career Timeline</h3>
+            <ul class="timeline">
+              <li>
+                <span class="time">2024 - Present</span>
+                Leading product delivery and full-stack execution for client initiatives.
+              </li>
+              <li>
+                <span class="time">2020 - 2024</span>
+                Independent development across business websites, tools, and web platforms.
+              </li>
+              <li>
+                <span class="time">Focus</span>
+                Product-first engineering with long-term maintainability.
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Professional Snapshot</h2>
+        <div class="metrics" aria-label="Key metrics">
+          <article class="metric">
+            <span class="metric-label">Repositories</span>
+            <span class="metric-value">118</span>
+          </article>
+          <article class="metric">
+            <span class="metric-label">GitHub Stars</span>
+            <span class="metric-value">55</span>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Top Language</span>
+            <span class="metric-value">TypeScript</span>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Projects Delivered</span>
+            <span class="metric-value">40+</span>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Role</span>
+            <span class="metric-value">Product Engineer</span>
+          </article>
+          <article class="metric">
+            <span class="metric-label">Collaboration</span>
+            <span class="metric-value">By inquiry</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta">
+        <h2>Let's Build Something Valuable</h2>
+        <p>
+          Open to full-time roles, contract work, and focused collaborations where product impact
+          and execution quality are priorities.
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="https://www.facebook.com/x3ef8">Start Conversation</a>
+          <a class="btn ghost" href="https://0x3ef8.github.io/linktree">More Links</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

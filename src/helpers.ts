@@ -68,7 +68,7 @@ export const buildFileRows = (files: readonly string[]): FileManagerRow[] => {
       };
     }
 
-    if (["doc", "docx", "pdf"].includes(extension)) {
+    if (["doc", "docx", "pdf", "html", "htm"].includes(extension)) {
       return {
         name: fileName,
         kind: "Document",

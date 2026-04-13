@@ -1,0 +1,1443 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WakaTime Coding Dashboard</title>
+    <style>
+      :root {
+        --bg-top: #1f232b;
+        --bg-bottom: #151920;
+        --panel: rgba(23, 29, 40, 0.9);
+        --panel-soft: rgba(18, 24, 34, 0.82);
+        --line: rgba(148, 165, 193, 0.28);
+        --text: #edf3fd;
+        --muted: #9fb0cc;
+        --accent: #69c7ff;
+        --accent-strong: #3aa7f2;
+        --danger: #ff9b9b;
+        --space-sm: 0.5rem;
+        --space-md: 0.72rem;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        font-family: "Space Grotesk", "Segoe UI", sans-serif;
+        background:
+          radial-gradient(1100px 600px at 90% -10%, rgba(190, 204, 226, 0.16), transparent 60%),
+          radial-gradient(760px 470px at 0% 110%, rgba(111, 129, 157, 0.14), transparent 62%),
+          linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.22;
+        background-image:
+          radial-gradient(rgba(180, 194, 219, 0.13) 0.7px, transparent 0.7px),
+          repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.02) 0,
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px,
+            transparent 2px
+          );
+        background-size: 22px 22px, auto;
+      }
+
+      .app {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: none;
+        margin: 0 auto;
+        padding: 1rem 1.06rem 1.28rem;
+      }
+
+      .main {
+        min-width: 0;
+      }
+
+      .topbar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.7rem;
+      }
+
+      .eyebrow {
+        margin: 0;
+        font-size: 0.68rem;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+        color: #a9bee1;
+        font-family: "JetBrains Mono", "Consolas", monospace;
+      }
+
+      h1 {
+        margin: 0.35rem 0 0;
+        line-height: 1.08;
+        font-size: clamp(1.3rem, 2.9vw, 2rem);
+      }
+
+      .sub {
+        margin: 0.24rem 0 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.44rem;
+      }
+
+      select,
+      button {
+        border-radius: 0.42rem;
+        border: 1px solid rgba(162, 180, 206, 0.32);
+        background: rgba(18, 24, 35, 0.86);
+        color: var(--text);
+        font: inherit;
+        font-size: 0.73rem;
+      }
+
+      select {
+        padding: 0.36rem 0.5rem;
+      }
+
+      button {
+        padding: 0.36rem 0.6rem;
+        cursor: pointer;
+      }
+
+      .kpis {
+        margin-top: 0.82rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+        gap: 0.58rem;
+      }
+
+      .kpi {
+        border-radius: 0.54rem;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 0.56rem 0.62rem;
+      }
+
+      .kpi .label {
+        margin: 0;
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #9eb2d0;
+      }
+
+      .kpi .value {
+        margin: 0.24rem 0 0;
+        font-size: 1.04rem;
+        font-weight: 700;
+      }
+
+      .kpi .meta {
+        margin: 0.15rem 0 0;
+        font-size: 0.66rem;
+        color: var(--muted);
+      }
+
+      .meter {
+        margin-top: 0.34rem;
+        height: 0.22rem;
+        border-radius: 999px;
+        background: rgba(89, 107, 136, 0.35);
+        overflow: hidden;
+      }
+
+      .meter span {
+        display: block;
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent-strong), var(--accent));
+      }
+
+      .layout {
+        margin-top: 0.78rem;
+        display: grid;
+        grid-template-columns: minmax(0, 1.95fr) minmax(290px, 1fr);
+        gap: var(--space-md);
+        align-items: start;
+      }
+
+      .layout > div {
+        min-width: 0;
+        display: grid;
+        gap: var(--space-md);
+      }
+
+      .side-panel {
+        align-self: start;
+      }
+
+      .merged-stack {
+        display: grid;
+        gap: var(--space-md);
+      }
+
+      .merged-card {
+        border-radius: 0.45rem;
+        border: 1px solid rgba(140, 160, 189, 0.24);
+        padding: 0.6rem;
+        background: rgba(12, 18, 28, 0.62);
+      }
+
+      .merged-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.36rem;
+        margin-bottom: 0.46rem;
+      }
+
+      .merged-head h3 {
+        margin: 0;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #bfd0e9;
+      }
+
+      .panel {
+        border-radius: 0.56rem;
+        border: 1px solid var(--line);
+        background: var(--panel-soft);
+        padding: 0.76rem 0.8rem 0.86rem;
+      }
+
+      .panel + .panel {
+        margin-top: 0.58rem;
+      }
+
+      .panel-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.4rem;
+        margin-bottom: 0.56rem;
+      }
+
+      .panel h2 {
+        margin: 0;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #bfd0e9;
+      }
+
+      .note {
+        font-size: 0.64rem;
+        color: var(--muted);
+      }
+
+      .charts {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+        gap: var(--space-md);
+      }
+
+      canvas {
+        width: 100%;
+        height: 240px;
+        display: block;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(146, 165, 193, 0.22);
+        background: rgba(15, 20, 30, 0.54);
+      }
+
+      canvas.is-interactive {
+        cursor: crosshair;
+      }
+
+      .heat {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 10px;
+        grid-template-rows: repeat(7, 10px);
+        gap: 3px;
+        overflow-x: auto;
+        padding-bottom: 0.18rem;
+      }
+
+      .heat b {
+        border-radius: 2px;
+        border: 1px solid rgba(128, 143, 167, 0.22);
+        background: rgba(70, 82, 103, 0.22);
+        cursor: pointer;
+        transition: transform 0.08s ease, border-color 0.12s ease;
+      }
+
+      .heat b:hover {
+        transform: translateY(-1px);
+        border-color: rgba(176, 196, 226, 0.48);
+      }
+
+      .heat b.lv1 {
+        background: rgba(83, 166, 220, 0.24);
+      }
+
+      .heat b.lv2 {
+        background: rgba(83, 166, 220, 0.42);
+      }
+
+      .heat b.lv3 {
+        background: rgba(83, 166, 220, 0.62);
+      }
+
+      .heat b.lv4 {
+        background: rgba(83, 166, 220, 0.82);
+      }
+
+      .mini-grid {
+        margin-top: 0.62rem;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--space-sm);
+      }
+
+      .mini {
+        border-radius: 0.38rem;
+        border: 1px solid rgba(144, 160, 185, 0.24);
+        padding: 0.42rem 0.46rem;
+        background: rgba(16, 22, 32, 0.55);
+      }
+
+      .mini .label {
+        margin: 0;
+        font-size: 0.58rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #9fb2cf;
+      }
+
+      .mini .value {
+        margin: 0.18rem 0 0;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-md);
+      }
+
+      .split-card {
+        border-radius: 0.56rem;
+        border: 1px solid var(--line);
+        background: var(--panel-soft);
+        padding: 0.76rem 0.8rem 0.86rem;
+      }
+
+      .split-card h2 {
+        margin: 0;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #bfd0e9;
+      }
+
+      .bars {
+        margin-top: var(--space-sm);
+        display: grid;
+        gap: 0.48rem;
+      }
+
+      .bar-item {
+        display: grid;
+        gap: 0.2rem;
+      }
+
+      .bar-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.48rem;
+        font-size: 0.73rem;
+      }
+
+      .bar-head span:last-child {
+        color: var(--muted);
+      }
+
+      .bar-meta {
+        margin: 0;
+        font-size: 0.65rem;
+        color: #8fa4c8;
+      }
+
+      .bar-track {
+        height: 0.24rem;
+        border-radius: 999px;
+        overflow: hidden;
+        background: rgba(90, 108, 136, 0.35);
+      }
+
+      .bar-track span {
+        display: block;
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent-strong), var(--accent));
+      }
+
+      .plain {
+        margin: var(--space-sm) 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.42rem;
+      }
+
+      .plain li {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding-bottom: 0.36rem;
+        border-bottom: 1px solid rgba(136, 152, 178, 0.2);
+        font-size: 0.72rem;
+      }
+
+      .plain li span:last-child {
+        color: var(--muted);
+      }
+
+      .error {
+        margin-top: 0.5rem;
+        color: var(--danger);
+        font-size: 0.74rem;
+      }
+
+      .chart-tooltip {
+        position: fixed;
+        z-index: 50;
+        pointer-events: none;
+        opacity: 0;
+        transform: translate(-50%, calc(-100% - 10px));
+        border-radius: 0.45rem;
+        border: 1px solid rgba(150, 171, 204, 0.45);
+        background: rgba(8, 13, 22, 0.94);
+        color: #eaf3ff;
+        padding: 0.42rem 0.52rem;
+        font-size: 0.68rem;
+        line-height: 1.4;
+        letter-spacing: 0.02em;
+        white-space: pre-line;
+        box-shadow: 0 0.55rem 1.2rem rgba(0, 0, 0, 0.42);
+        transition: opacity 0.12s ease;
+      }
+
+      .chart-tooltip::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -6px;
+        width: 8px;
+        height: 8px;
+        border-right: 1px solid rgba(150, 171, 204, 0.45);
+        border-bottom: 1px solid rgba(150, 171, 204, 0.45);
+        background: rgba(8, 13, 22, 0.94);
+        transform: translateX(-50%) rotate(45deg);
+      }
+
+      .chart-tooltip.visible {
+        opacity: 1;
+      }
+
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+          gap: 0.62rem;
+        }
+
+        .layout > div {
+          gap: 0.62rem;
+        }
+      }
+
+      @media (max-width: 980px) {
+        .charts {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .app {
+          padding: 0.76rem 0.7rem 1rem;
+        }
+
+        .charts,
+        .split {
+          grid-template-columns: 1fr;
+        }
+
+        .mini-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .panel {
+          padding: 0.68rem 0.7rem 0.78rem;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .kpis,
+        .mini-grid {
+          grid-template-columns: 1fr;
+        }
+
+        select,
+        button {
+          width: 100%;
+        }
+
+        .controls {
+          width: 100%;
+        }
+
+        canvas {
+          height: 200px;
+        }
+
+        .chart-tooltip {
+          font-size: 0.62rem;
+          padding: 0.36rem 0.46rem;
+        }
+      }
+
+      @media (max-width: 460px) {
+        .heat {
+          grid-auto-columns: 8px;
+          grid-template-rows: repeat(7, 8px);
+          gap: 2px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <section class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Dashboard</p>
+            <h1>Coding Activity Overview</h1>
+            <p class="sub">Live WakaTime analytics.</p>
+          </div>
+          <div class="controls">
+            <select id="rangeSelect" aria-label="Select WakaTime range">
+              <option value="last_7_days">Last 7 Days</option>
+              <option value="last_30_days">Last 30 Days</option>
+              <option value="last_6_months">Last 6 Months</option>
+              <option value="last_year">Last Year</option>
+              <option value="all_time">All Time</option>
+            </select>
+            <button id="refreshBtn" type="button">Refresh</button>
+          </div>
+        </header>
+
+        <section class="kpis" aria-label="Key metrics">
+          <article class="kpi">
+            <p class="label">Total Coding</p>
+            <p class="value" id="kpiTotal">--</p>
+            <p class="meta" id="kpiTotalMeta">--</p>
+            <div class="meter"><span id="kpiTotalMeter" style="width: 0%"></span></div>
+          </article>
+          <article class="kpi">
+            <p class="label">Daily Average</p>
+            <p class="value" id="kpiDaily">--</p>
+            <p class="meta" id="kpiDailyMeta">--</p>
+            <div class="meter"><span id="kpiDailyMeter" style="width: 0%"></span></div>
+          </article>
+          <article class="kpi">
+            <p class="label">Top Language</p>
+            <p class="value" id="kpiLanguage">--</p>
+            <p class="meta" id="kpiLanguageMeta">--</p>
+            <div class="meter"><span id="kpiLanguageMeter" style="width: 0%"></span></div>
+          </article>
+          <article class="kpi">
+            <p class="label">Editor</p>
+            <p class="value" id="kpiEditor">--</p>
+            <p class="meta" id="kpiEditorMeta">--</p>
+            <div class="meter"><span id="kpiEditorMeter" style="width: 0%"></span></div>
+          </article>
+          <article class="kpi">
+            <p class="label">Best Day</p>
+            <p class="value" id="kpiBest">--</p>
+            <p class="meta" id="kpiBestMeta">--</p>
+            <div class="meter"><span id="kpiBestMeter" style="width: 0%"></span></div>
+          </article>
+        </section>
+
+        <section class="layout">
+          <div>
+            <section class="charts">
+              <article class="panel">
+                <div class="panel-head">
+                  <h2>Coding Activity</h2>
+                  <span class="note" id="activityNote">--</span>
+                </div>
+                <canvas id="activityCanvas" class="is-interactive"></canvas>
+              </article>
+
+              <article class="panel">
+                <div class="panel-head">
+                  <h2>Language Distribution</h2>
+                  <span class="note">Top 5</span>
+                </div>
+                <canvas id="radarCanvas" class="is-interactive"></canvas>
+              </article>
+            </section>
+
+            <article class="panel">
+              <div class="panel-head">
+                <h2>Coding Consistency</h2>
+                <span class="note" id="consistencyNote">Last 365 days</span>
+              </div>
+              <div class="heat" id="heatmap"></div>
+              <div class="mini-grid">
+                <article class="mini">
+                  <p class="label">Consistency</p>
+                  <p class="value" id="consistencyPct">--</p>
+                </article>
+                <article class="mini">
+                  <p class="label">Active Days</p>
+                  <p class="value" id="consistencyDays">--</p>
+                </article>
+                <article class="mini">
+                  <p class="label">Current Streak</p>
+                  <p class="value" id="consistencyCurrent">--</p>
+                </article>
+                <article class="mini">
+                  <p class="label">Best Streak</p>
+                  <p class="value" id="consistencyBest">--</p>
+                </article>
+              </div>
+            </article>
+
+            <section class="split">
+              <article class="split-card">
+                <div class="panel-head">
+                  <h2>Top Projects</h2>
+                  <span class="note" id="projectCount">--</span>
+                </div>
+                <div class="bars" id="projectsList"></div>
+              </article>
+
+              <article class="split-card">
+                <div class="panel-head">
+                  <h2>Dependencies</h2>
+                  <span class="note" id="dependencyCount">--</span>
+                </div>
+                <div class="bars" id="dependenciesList"></div>
+              </article>
+            </section>
+          </div>
+
+          <aside>
+            <article class="panel side-panel">
+              <div class="panel-head">
+                <h2>Environment Breakdown</h2>
+                <span class="note">Right panel overview</span>
+              </div>
+
+              <section class="merged-stack">
+                <article class="merged-card">
+                  <div class="merged-head">
+                    <h3>Editors</h3>
+                    <span class="note" id="editorCount">--</span>
+                  </div>
+                  <div class="bars" id="editorsList"></div>
+                </article>
+
+                <article class="merged-card">
+                  <div class="merged-head">
+                    <h3>Operating Systems</h3>
+                    <span class="note" id="osCount">--</span>
+                  </div>
+                  <div class="bars" id="osList"></div>
+                </article>
+
+                <article class="merged-card">
+                  <div class="merged-head">
+                    <h3>Categories</h3>
+                    <span class="note" id="categoryCount">--</span>
+                  </div>
+                  <div class="bars" id="categoriesList"></div>
+                </article>
+
+                <article class="merged-card">
+                  <div class="merged-head">
+                    <h3>Machines</h3>
+                    <span class="note" id="machineCount">--</span>
+                  </div>
+                  <ul class="plain" id="machinesList"></ul>
+                </article>
+              </section>
+            </article>
+          </aside>
+        </section>
+
+        <div id="chartTooltip" class="chart-tooltip" role="status" aria-live="polite"></div>
+        <p id="errorText" class="error" hidden></p>
+      </section>
+    </main>
+
+    <script>
+      const RANGE_LABELS = {
+        last_7_days: "Last 7 Days",
+        last_30_days: "Last 30 Days",
+        last_6_months: "Last 6 Months",
+        last_year: "Last Year",
+        all_time: "All Time",
+      };
+
+      const state = {
+        selected: null,
+      };
+
+      const ids = {
+        rangeSelect: document.getElementById("rangeSelect"),
+        refreshBtn: document.getElementById("refreshBtn"),
+        errorText: document.getElementById("errorText"),
+        activityCanvas: document.getElementById("activityCanvas"),
+        radarCanvas: document.getElementById("radarCanvas"),
+        heatmap: document.getElementById("heatmap"),
+        chartTooltip: document.getElementById("chartTooltip"),
+      };
+
+      const text = {
+        activityNote: document.getElementById("activityNote"),
+        kpiTotal: document.getElementById("kpiTotal"),
+        kpiTotalMeta: document.getElementById("kpiTotalMeta"),
+        kpiDaily: document.getElementById("kpiDaily"),
+        kpiDailyMeta: document.getElementById("kpiDailyMeta"),
+        kpiLanguage: document.getElementById("kpiLanguage"),
+        kpiLanguageMeta: document.getElementById("kpiLanguageMeta"),
+        kpiEditor: document.getElementById("kpiEditor"),
+        kpiEditorMeta: document.getElementById("kpiEditorMeta"),
+        kpiBest: document.getElementById("kpiBest"),
+        kpiBestMeta: document.getElementById("kpiBestMeta"),
+        consistencyPct: document.getElementById("consistencyPct"),
+        consistencyNote: document.getElementById("consistencyNote"),
+        consistencyDays: document.getElementById("consistencyDays"),
+        consistencyCurrent: document.getElementById("consistencyCurrent"),
+        consistencyBest: document.getElementById("consistencyBest"),
+        projectCount: document.getElementById("projectCount"),
+        dependencyCount: document.getElementById("dependencyCount"),
+        editorCount: document.getElementById("editorCount"),
+        osCount: document.getElementById("osCount"),
+        categoryCount: document.getElementById("categoryCount"),
+        machineCount: document.getElementById("machineCount"),
+      };
+
+      const meters = {
+        kpiTotal: document.getElementById("kpiTotalMeter"),
+        kpiDaily: document.getElementById("kpiDailyMeter"),
+        kpiLanguage: document.getElementById("kpiLanguageMeter"),
+        kpiEditor: document.getElementById("kpiEditorMeter"),
+        kpiBest: document.getElementById("kpiBestMeter"),
+      };
+
+      const lists = {
+        projects: document.getElementById("projectsList"),
+        dependencies: document.getElementById("dependenciesList"),
+        editors: document.getElementById("editorsList"),
+        os: document.getElementById("osList"),
+        categories: document.getElementById("categoriesList"),
+        machines: document.getElementById("machinesList"),
+      };
+
+      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+      const INTERACTION_RADIUS = 14;
+      const parsePercent = (value) => {
+        const parsed = Number.parseFloat(String(value || "0").replace("%", ""));
+        return Number.isFinite(parsed) ? parsed : 0;
+      };
+      const setText = (node, value) => {
+        if (node) {
+          node.textContent = value;
+        }
+      };
+      const setMeter = (node, value) => {
+        if (node) {
+          node.style.width = `${clamp(value, 0, 100).toFixed(2)}%`;
+        }
+      };
+
+      const shortDate = (value) => {
+        if (!value) {
+          return "--";
+        }
+
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) {
+          return String(value);
+        }
+
+        return date.toLocaleDateString([], { month: "short", day: "2-digit", year: "numeric" });
+      };
+
+      const dayLabel = (value) => {
+        if (!value) {
+          return "--";
+        }
+
+        const date = new Date(`${value}T00:00:00`);
+        if (Number.isNaN(date.getTime())) {
+          return String(value);
+        }
+
+        return date.toLocaleDateString([], { weekday: "short" });
+      };
+
+      const toDuration = (seconds) => {
+        const safe = Number.isFinite(seconds) ? Math.max(0, seconds) : 0;
+        const hours = Math.floor(safe / 3600);
+        const minutes = Math.floor((safe % 3600) / 60);
+        return `${hours}h ${minutes}m`;
+      };
+
+      const sortDaily = (days) => (Array.isArray(days) ? [...days].sort((a, b) => String(a.date).localeCompare(String(b.date))) : []);
+
+      const hideTooltip = () => {
+        ids.chartTooltip.classList.remove("visible");
+      };
+
+      const showTooltip = (clientX, clientY, lines) => {
+        const tooltip = ids.chartTooltip;
+        tooltip.textContent = lines.join("\n");
+        tooltip.classList.add("visible");
+
+        const tooltipWidth = tooltip.offsetWidth;
+        const tooltipHeight = tooltip.offsetHeight;
+        const viewportPadding = 8;
+
+        const clampedX = clamp(
+          clientX,
+          viewportPadding + tooltipWidth / 2,
+          window.innerWidth - viewportPadding - tooltipWidth / 2,
+        );
+
+        const clampedY = clamp(
+          clientY,
+          tooltipHeight + viewportPadding + 16,
+          window.innerHeight - viewportPadding,
+        );
+
+        tooltip.style.left = `${clampedX}px`;
+        tooltip.style.top = `${clampedY}px`;
+      };
+
+      const findNearestPoint = (points, x, y, radius) => {
+        const radiusSq = radius * radius;
+        let nearest = null;
+        let nearestDistance = radiusSq;
+
+        points.forEach((point) => {
+          const dx = point.x - x;
+          const dy = point.y - y;
+          const distance = dx * dx + dy * dy;
+
+          if (distance <= nearestDistance) {
+            nearestDistance = distance;
+            nearest = point;
+          }
+        });
+
+        return nearest;
+      };
+
+      const renderBars = (container, items, limit) => {
+        container.innerHTML = "";
+
+        if (!Array.isArray(items) || items.length === 0) {
+          const empty = document.createElement("p");
+          empty.className = "bar-meta";
+          empty.textContent = "No data available for this range.";
+          container.appendChild(empty);
+          return;
+        }
+
+        items.slice(0, limit).forEach((item) => {
+          const percent = typeof item.percent === "number" ? item.percent : parsePercent(item.percentLabel);
+          const row = document.createElement("article");
+          row.className = "bar-item";
+
+          const head = document.createElement("div");
+          head.className = "bar-head";
+          const name = document.createElement("span");
+          name.textContent = item.name || "Unknown";
+          const pct = document.createElement("span");
+          pct.textContent = item.percentLabel || "--";
+          head.appendChild(name);
+          head.appendChild(pct);
+
+          const track = document.createElement("div");
+          track.className = "bar-track";
+          const fill = document.createElement("span");
+          fill.style.width = `${clamp(percent, 0, 100).toFixed(2)}%`;
+          track.appendChild(fill);
+
+          const meta = document.createElement("p");
+          meta.className = "bar-meta";
+          meta.textContent = item.time || "--";
+
+          row.appendChild(head);
+          row.appendChild(track);
+          row.appendChild(meta);
+          container.appendChild(row);
+        });
+      };
+
+      const renderMachines = (container, items) => {
+        container.innerHTML = "";
+
+        if (!Array.isArray(items) || items.length === 0) {
+          const li = document.createElement("li");
+          li.innerHTML = "<span>No machines available</span><span>--</span>";
+          container.appendChild(li);
+          return;
+        }
+
+        items.slice(0, 8).forEach((item) => {
+          const li = document.createElement("li");
+          const left = document.createElement("span");
+          const right = document.createElement("span");
+          left.textContent = item.name || "Unknown";
+          right.textContent = item.time || item.percentLabel || "--";
+          li.appendChild(left);
+          li.appendChild(right);
+          container.appendChild(li);
+        });
+      };
+
+      const drawLineChart = (days) => {
+        const canvas = ids.activityCanvas;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          return;
+        }
+
+        const points = sortDaily(days).slice(-7);
+        const width = canvas.clientWidth || 520;
+        const height = canvas.clientHeight || 240;
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+
+        if (points.length === 0) {
+          ctx.fillStyle = "rgba(207, 221, 245, 0.72)";
+          ctx.font = "12px Space Grotesk";
+          ctx.fillText("No activity data available.", 16, height / 2);
+          canvas.onpointermove = null;
+          canvas.onmousemove = null;
+          canvas.onpointerleave = hideTooltip;
+          canvas.onmouseleave = hideTooltip;
+          return;
+        }
+
+        const pad = { top: 18, right: 12, bottom: 28, left: 32 };
+        const w = width - pad.left - pad.right;
+        const h = height - pad.top - pad.bottom;
+        const max = Math.max(...points.map((p) => Number(p.totalSeconds) || 0), 1);
+
+        ctx.strokeStyle = "rgba(123, 145, 176, 0.22)";
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i <= 4; i += 1) {
+          const y = pad.top + (h * i) / 4;
+          ctx.beginPath();
+          ctx.moveTo(pad.left, y);
+          ctx.lineTo(width - pad.right, y);
+          ctx.stroke();
+          const val = max - (max * i) / 4;
+          ctx.fillStyle = "rgba(158, 178, 208, 0.72)";
+          ctx.font = "11px Space Grotesk";
+          ctx.fillText(`${(val / 3600).toFixed(1)}h`, 4, y + 4);
+        }
+
+        const mapped = points.map((point, i) => {
+          const x = points.length === 1 ? pad.left + w / 2 : pad.left + (w * i) / (points.length - 1);
+          const y = pad.top + h - (h * (Number(point.totalSeconds) || 0)) / max;
+          return {
+            x,
+            y,
+            date: point.date,
+            total: point.total || toDuration(Number(point.totalSeconds) || 0),
+            totalSeconds: Number(point.totalSeconds) || 0,
+          };
+        });
+
+        const gradient = ctx.createLinearGradient(0, pad.top, 0, pad.top + h);
+        gradient.addColorStop(0, "rgba(94, 177, 235, 0.42)");
+        gradient.addColorStop(1, "rgba(94, 177, 235, 0)");
+
+        ctx.beginPath();
+        mapped.forEach((point, i) => {
+          if (i === 0) {
+            ctx.moveTo(point.x, point.y);
+          } else {
+            ctx.lineTo(point.x, point.y);
+          }
+        });
+        ctx.lineTo(mapped[mapped.length - 1].x, pad.top + h);
+        ctx.lineTo(mapped[0].x, pad.top + h);
+        ctx.closePath();
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        ctx.beginPath();
+        mapped.forEach((point, i) => {
+          if (i === 0) {
+            ctx.moveTo(point.x, point.y);
+          } else {
+            ctx.lineTo(point.x, point.y);
+          }
+        });
+        ctx.strokeStyle = "#6ec8ff";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        mapped.forEach((point) => {
+          ctx.beginPath();
+          ctx.arc(point.x, point.y, 3.2, 0, Math.PI * 2);
+          ctx.fillStyle = "#1b2a3f";
+          ctx.fill();
+          ctx.strokeStyle = "#8fd6ff";
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          ctx.fillStyle = "rgba(174, 191, 218, 0.82)";
+          ctx.font = "11px Space Grotesk";
+          ctx.fillText(dayLabel(point.date), point.x - 11, height - 8);
+        });
+
+        const handleLineMove = (event) => {
+          const rect = canvas.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          const nearest = findNearestPoint(mapped, x, y, INTERACTION_RADIUS);
+
+          if (!nearest) {
+            hideTooltip();
+            return;
+          }
+
+          showTooltip(event.clientX, event.clientY, [
+            `${dayLabel(nearest.date)} (${shortDate(nearest.date)})`,
+            nearest.total,
+          ]);
+        };
+
+        canvas.onpointermove = handleLineMove;
+        canvas.onmousemove = handleLineMove;
+        canvas.onpointerleave = hideTooltip;
+        canvas.onmouseleave = hideTooltip;
+      };
+
+      const drawRadar = (items) => {
+        const canvas = ids.radarCanvas;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          return;
+        }
+
+        const source = Array.isArray(items) ? items.slice(0, 5) : [];
+        const width = canvas.clientWidth || 360;
+        const height = canvas.clientHeight || 240;
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+
+        if (source.length === 0) {
+          ctx.fillStyle = "rgba(207, 221, 245, 0.72)";
+          ctx.font = "12px Space Grotesk";
+          ctx.fillText("No language data available.", 16, height / 2);
+          canvas.onpointermove = null;
+          canvas.onmousemove = null;
+          canvas.onpointerleave = hideTooltip;
+          canvas.onmouseleave = hideTooltip;
+          return;
+        }
+
+        const cx = width / 2;
+        const cy = height / 2;
+        const radius = Math.min(width, height) * 0.33;
+
+        ctx.strokeStyle = "rgba(131, 150, 182, 0.26)";
+        ctx.lineWidth = 1;
+
+        for (let ring = 1; ring <= 4; ring += 1) {
+          const rr = (radius * ring) / 4;
+          ctx.beginPath();
+          source.forEach((_, i) => {
+            const a = (Math.PI * 2 * i) / source.length - Math.PI / 2;
+            const x = cx + rr * Math.cos(a);
+            const y = cy + rr * Math.sin(a);
+            if (i === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          });
+          ctx.closePath();
+          ctx.stroke();
+        }
+
+        source.forEach((item, i) => {
+          const a = (Math.PI * 2 * i) / source.length - Math.PI / 2;
+          const x = cx + radius * Math.cos(a);
+          const y = cy + radius * Math.sin(a);
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(x, y);
+          ctx.strokeStyle = "rgba(131, 150, 182, 0.22)";
+          ctx.stroke();
+
+          const lx = cx + (radius + 14) * Math.cos(a);
+          const ly = cy + (radius + 14) * Math.sin(a);
+          ctx.fillStyle = "rgba(178, 196, 222, 0.85)";
+          ctx.font = "11px Space Grotesk";
+          ctx.fillText(item.name || "Unknown", lx - 22, ly + 3);
+        });
+
+        ctx.beginPath();
+        const radarPoints = source.map((item, i) => {
+          const percent = typeof item.percent === "number" ? item.percent : parsePercent(item.percentLabel);
+          const v = percent / 100;
+          const a = (Math.PI * 2 * i) / source.length - Math.PI / 2;
+          const x = cx + radius * v * Math.cos(a);
+          const y = cy + radius * v * Math.sin(a);
+
+          return {
+            x,
+            y,
+            name: item.name || "Unknown",
+            percentLabel: item.percentLabel || `${percent.toFixed(2)}%`,
+            time: item.time || "--",
+          };
+        });
+
+        radarPoints.forEach((point, i) => {
+          if (i === 0) {
+            ctx.moveTo(point.x, point.y);
+          } else {
+            ctx.lineTo(point.x, point.y);
+          }
+        });
+        ctx.closePath();
+        ctx.fillStyle = "rgba(104, 198, 255, 0.18)";
+        ctx.fill();
+        ctx.strokeStyle = "#6ec8ff";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        radarPoints.forEach((point) => {
+          ctx.beginPath();
+          ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = "#0f1827";
+          ctx.fill();
+          ctx.strokeStyle = "#8fd6ff";
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        });
+
+        const handleRadarMove = (event) => {
+          const rect = canvas.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          const nearest = findNearestPoint(radarPoints, x, y, INTERACTION_RADIUS);
+
+          if (!nearest) {
+            hideTooltip();
+            return;
+          }
+
+          showTooltip(event.clientX, event.clientY, [
+            nearest.name,
+            `${nearest.percentLabel} • ${nearest.time}`,
+          ]);
+        };
+
+        canvas.onpointermove = handleRadarMove;
+        canvas.onmousemove = handleRadarMove;
+        canvas.onpointerleave = hideTooltip;
+        canvas.onmouseleave = hideTooltip;
+      };
+
+      const dateKey = (date) => {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        return `${y}-${m}-${d}`;
+      };
+
+      const heatLevelText = (level, seconds) => {
+        if (seconds <= 0 || level <= 0) {
+          return "No activity";
+        }
+
+        if (level === 1) {
+          return "Low activity";
+        }
+
+        if (level === 2) {
+          return "Moderate activity";
+        }
+
+        if (level === 3) {
+          return "High activity";
+        }
+
+        return "Peak activity";
+      };
+
+      const bindHeatmapTooltip = () => {
+        const handleHeatMove = (event) => {
+          const target = event.target instanceof Element ? event.target.closest("b") : null;
+          if (!target || !ids.heatmap.contains(target)) {
+            hideTooltip();
+            return;
+          }
+
+          const date = target.dataset.date || "--";
+          const seconds = Number(target.dataset.seconds) || 0;
+          const level = Number(target.dataset.level) || 0;
+
+          showTooltip(event.clientX, event.clientY, [
+            `${dayLabel(date)} (${shortDate(date)})`,
+            toDuration(seconds),
+            heatLevelText(level, seconds),
+          ]);
+        };
+
+        ids.heatmap.onpointermove = handleHeatMove;
+        ids.heatmap.onmousemove = handleHeatMove;
+        ids.heatmap.onpointerleave = hideTooltip;
+        ids.heatmap.onmouseleave = hideTooltip;
+      };
+
+      const renderHeatmap = (days) => {
+        const totalDays = 365;
+        const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+        const normalized = sortDaily(days)
+          .map((day) => ({
+            key: String(day.date || "").slice(0, 10),
+            sec: Number(day.totalSeconds) || 0,
+          }))
+          .filter((day) => isoDatePattern.test(day.key));
+
+        const map = new Map();
+        normalized.forEach((day) => {
+          const current = map.get(day.key) || 0;
+          map.set(day.key, current + Math.max(0, day.sec));
+        });
+
+        ids.heatmap.innerHTML = "";
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const values = [];
+
+        for (let i = totalDays - 1; i >= 0; i -= 1) {
+          const date = new Date(today);
+          date.setDate(today.getDate() - i);
+          const key = dateKey(date);
+          values.push({ key, sec: map.get(key) || 0 });
+        }
+
+        const max = values.reduce((acc, value) => Math.max(acc, value.sec), 0);
+        values.forEach((value) => {
+          const cell = document.createElement("b");
+          let level = 0;
+          if (value.sec > 0 && max > 0) {
+            const ratio = value.sec / max;
+            level = ratio > 0.75 ? 4 : ratio > 0.5 ? 3 : ratio > 0.25 ? 2 : 1;
+          }
+
+          if (level > 0) {
+            cell.classList.add(`lv${level}`);
+          }
+
+          cell.dataset.date = value.key;
+          cell.dataset.seconds = String(value.sec);
+          cell.dataset.level = String(level);
+          cell.title = `${value.key}: ${toDuration(value.sec)}`;
+          ids.heatmap.appendChild(cell);
+        });
+
+        const uniqueDates = Array.from(map.keys()).sort();
+        let observedDays = totalDays;
+
+        if (uniqueDates.length > 0) {
+          const firstObserved = new Date(`${uniqueDates[0]}T00:00:00`);
+          if (!Number.isNaN(firstObserved.getTime())) {
+            const diffDays = Math.floor((today.getTime() - firstObserved.getTime()) / 86400000) + 1;
+            observedDays = clamp(diffDays, 1, totalDays);
+          }
+        }
+
+        const trackedValues = values.slice(totalDays - observedDays);
+        const active = trackedValues.filter((value) => value.sec > 0).length;
+        const consistency = observedDays > 0 ? (active / observedDays) * 100 : 0;
+
+        let currentStreak = 0;
+        for (let i = trackedValues.length - 1; i >= 0; i -= 1) {
+          if (trackedValues[i].sec > 0) {
+            currentStreak += 1;
+          } else {
+            break;
+          }
+        }
+
+        let bestStreak = 0;
+        let streak = 0;
+        trackedValues.forEach((value) => {
+          if (value.sec > 0) {
+            streak += 1;
+            bestStreak = Math.max(bestStreak, streak);
+          } else {
+            streak = 0;
+          }
+        });
+
+        setText(text.consistencyPct, `${consistency.toFixed(1)}%`);
+        setText(text.consistencyDays, `${active}/${observedDays}`);
+        setText(text.consistencyCurrent, `${currentStreak} day${currentStreak === 1 ? "" : "s"}`);
+        setText(text.consistencyBest, `${bestStreak} day${bestStreak === 1 ? "" : "s"}`);
+
+        if (observedDays < totalDays) {
+          return `Based on last ${observedDays} day${observedDays === 1 ? "" : "s"}`;
+        }
+
+        return "Last 365 days";
+      };
+
+      const render = (selected) => {
+        state.selected = selected;
+
+        setText(text.activityNote, RANGE_LABELS[selected.range] || selected.range || "Range");
+
+        setText(text.kpiTotal, selected.total || "--");
+        setText(text.kpiTotalMeta, `${shortDate(selected.startDate)} - ${shortDate(selected.endDate)}`);
+        setMeter(meters.kpiTotal, Number(selected.percentCalculated) || 0);
+
+        setText(text.kpiDaily, selected.dailyAverage || "--");
+        const coverage =
+          selected.daysIncludingHolidays && selected.daysMinusHolidays
+            ? `${selected.daysIncludingHolidays} days (${selected.daysMinusHolidays} coding)`
+            : "Coverage unavailable";
+        setText(text.kpiDailyMeta, coverage);
+        setMeter(meters.kpiDaily, ((Number(selected.dailyAverageSeconds) || 0) / (4 * 3600)) * 100);
+
+        setText(text.kpiLanguage, selected.topLanguage || "--");
+        setText(text.kpiLanguageMeta, selected.topLanguagePercent || "--");
+        setMeter(meters.kpiLanguage, parsePercent(selected.topLanguagePercent));
+
+        setText(text.kpiEditor, selected.topEditor || "--");
+        setText(text.kpiEditorMeta, selected.topEditorPercent || "--");
+        setMeter(meters.kpiEditor, parsePercent(selected.topEditorPercent));
+
+        setText(text.kpiBest, selected.bestDay?.text || "--");
+        setText(text.kpiBestMeta, shortDate(selected.bestDay?.date));
+        setMeter(meters.kpiBest, ((Number(selected.bestDay?.totalSeconds) || 0) / (6 * 3600)) * 100);
+
+        setText(text.projectCount, `${selected.counts?.projects ?? 0} projects`);
+        setText(text.dependencyCount, `${selected.counts?.dependencies ?? 0} dependencies`);
+        setText(text.editorCount, `${selected.counts?.editors ?? 0} editors`);
+        setText(text.osCount, `${selected.counts?.operatingSystems ?? 0} systems`);
+        setText(text.categoryCount, `${selected.counts?.categories ?? 0} categories`);
+        setText(text.machineCount, `${selected.counts?.machines ?? 0} machines`);
+
+        renderBars(lists.projects, selected.projectsAll || [], 6);
+        renderBars(lists.dependencies, selected.dependenciesAll || [], 6);
+        renderBars(lists.editors, selected.editorsAll || [], 4);
+        renderBars(lists.os, selected.operatingSystemsAll || [], 4);
+        renderBars(lists.categories, selected.categoriesAll || [], 5);
+        renderMachines(lists.machines, selected.machinesAll || []);
+
+        drawLineChart(selected.dailyActivity || []);
+        drawRadar(selected.languagesAll || []);
+        const consistencyNote = renderHeatmap(
+          selected.consistencyDailyActivity || selected.dailyActivity || [],
+        );
+        setText(text.consistencyNote, consistencyNote);
+      };
+
+      const setLoading = (loading) => {
+        ids.rangeSelect.disabled = loading;
+        ids.refreshBtn.disabled = loading;
+        ids.refreshBtn.textContent = loading ? "Loading..." : "Refresh";
+      };
+
+      const clearError = () => {
+        ids.errorText.hidden = true;
+        ids.errorText.textContent = "";
+      };
+
+      const showError = (message) => {
+        ids.errorText.hidden = false;
+        ids.errorText.textContent = message;
+      };
+
+      const fetchWakaTime = async (range) => {
+        const response = await fetch(`/api/wakatime?range=${encodeURIComponent(range)}`, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("Failed to fetch WakaTime data");
+        }
+
+        return response.json();
+      };
+
+      const load = async () => {
+        clearError();
+        setLoading(true);
+
+        try {
+          const selectedRange = ids.rangeSelect.value;
+          const selected = await fetchWakaTime(selectedRange);
+          render(selected);
+        } catch {
+          showError("Unable to load WakaTime analytics. Check your API key and try again.");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      let resizeTimer = null;
+      window.addEventListener("resize", () => {
+        hideTooltip();
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(() => {
+          if (state.selected) {
+            drawLineChart(state.selected.dailyActivity || []);
+            drawRadar(state.selected.languagesAll || []);
+          }
+        }, 120);
+      });
+
+      ids.rangeSelect.addEventListener("change", load);
+      ids.refreshBtn.addEventListener("click", load);
+      bindHeatmapTooltip();
+      load();
+    </script>
+  </body>
+</html>

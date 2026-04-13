@@ -13,7 +13,7 @@ export const FOLDERS: readonly FolderDefinition[] = [
     tone: "charcoal",
     position: "folder-1",
     surfacePosition: "window-1",
-    files: ["bio.md", "portrait.jpg", "quick-facts.txt"],
+    files: ["about.html"],
   },
   {
     id: "wishlist",
@@ -21,28 +21,23 @@ export const FOLDERS: readonly FolderDefinition[] = [
     tone: "silver",
     position: "folder-2",
     surfacePosition: "window-2",
-    files: [
-      "portfolio-redesign.pdf",
-      "ecommerce-case-study.md",
-      "dashboard-ui.png",
-      "github-links.txt",
-    ],
+    files: [],
   },
   {
     id: "content",
-    name: "experience",
+    name: "coding stats",
     tone: "steel",
     position: "folder-3",
     surfacePosition: "window-3",
-    files: ["resume-2026.pdf", "work-history.doc", "certificates.zip"],
+    files: ["wakatime-dashboard.html"],
   },
   {
     id: "favorites",
-    name: "contact",
+    name: "connect",
     tone: "ink",
     position: "folder-4",
     surfacePosition: "window-4",
-    files: ["contact-info.txt", "social-links.md", "book-a-call.pdf"],
+    files: [],
   },
 ] as const;
 
@@ -79,70 +74,15 @@ export const FILE_MANAGER_PLACE_LABEL: Record<FileManagerPlace, string> = {
 };
 
 export const PORTFOLIO_FILE_PROFILES: Record<string, PortfolioFileProfile> = {
-  "bio.md": {
-    title: "About Jay",
-    summary: "Short story and core strengths.",
-    realFilePath: "./files/about/bio.md",
+  "about.html": {
+    title: "About",
+    summary: "Professional overview, core stack, and engineering focus.",
+    realFilePath: "./files/about/about.html",
   },
-  "portrait.jpg": {
-    title: "Profile Portrait",
-    summary: "Primary profile photo used across the portfolio.",
-    realFilePath: "./files/about/portrait.png",
-  },
-  "quick-facts.txt": {
-    title: "Quick Facts",
-    summary: "Fast personal and professional highlights.",
-    realFilePath: "./files/about/quick-facts.txt",
-  },
-  "portfolio-redesign.pdf": {
-    title: "Portfolio Redesign",
-    summary: "Complete visual and interaction overhaul project.",
-    realFilePath: "./files/projects/portfolio-redesign.html",
-  },
-  "ecommerce-case-study.md": {
-    title: "Ecommerce Case Study",
-    summary: "Conversion-focused storefront redesign summary.",
-    realFilePath: "./files/projects/ecommerce-case-study.md",
-  },
-  "dashboard-ui.png": {
-    title: "Dashboard UI",
-    summary: "Admin dashboard interface concept and implementation notes.",
-    realFilePath: "./files/projects/dashboard-ui.png",
-  },
-  "github-links.txt": {
-    title: "Repository Links",
-    summary: "Selected repositories and code samples.",
-    realFilePath: "./files/projects/github-links.txt",
-  },
-  "resume-2026.pdf": {
-    title: "Resume 2026",
-    summary: "Current resume with updated project history.",
-    realFilePath: "./files/experience/resume-2026.html",
-  },
-  "work-history.doc": {
-    title: "Work History",
-    summary: "Detailed timeline of recent roles.",
-    realFilePath: "./files/experience/work-history.txt",
-  },
-  "certificates.zip": {
-    title: "Certificates",
-    summary: "Bundled credential files.",
-    realFilePath: "./files/experience/certificates.txt",
-  },
-  "contact-info.txt": {
-    title: "Contact Info",
-    summary: "Best channels for project inquiries.",
-    realFilePath: "./files/contact/contact-info.txt",
-  },
-  "social-links.md": {
-    title: "Social Links",
-    summary: "Portfolio and social profile links.",
-    realFilePath: "./files/contact/social-links.md",
-  },
-  "book-a-call.pdf": {
-    title: "Book A Call",
-    summary: "Simple booking instructions for discovery calls.",
-    realFilePath: "./files/contact/book-a-call.txt",
+  "wakatime-dashboard.html": {
+    title: "WakaTime Coding Dashboard",
+    summary: "Comprehensive coding analytics powered by WakaTime stats.",
+    realFilePath: "./files/experience/wakatime-dashboard.html",
   },
 };
 

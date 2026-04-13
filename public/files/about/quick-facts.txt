@@ -1,5 +1,0 @@
-Name: Jay
-Role: Frontend Developer
-Location: Philippines
-Primary Stack: Next.js, React, TypeScript
-Availability: Open for freelance and full-time roles
