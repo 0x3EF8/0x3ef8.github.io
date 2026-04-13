@@ -186,7 +186,7 @@ export function useViewer({
 
   const openPortfolioFile = (folderName: string, row: FileManagerRow) => {
     const profile = PORTFOLIO_FILE_PROFILES[row.name];
-    const mappedPath = row.path ?? profile?.realFilePath ?? "./files/system/file-missing.txt";
+    const mappedPath = row.path ?? profile?.realFilePath ?? "./files/connect/file-missing.txt";
     const mappedExtension = getPathExtension(mappedPath);
     const sourceExtension = getFileExtension(row.name);
     const mappedIsHtml = HTML_FILE_EXTENSIONS.includes(mappedExtension);

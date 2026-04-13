@@ -97,6 +97,8 @@ type WakaTimeRange = (typeof VALID_RANGES)[number];
 const DEFAULT_RANGE: WakaTimeRange = "last_7_days";
 
 export const runtime = "nodejs";
+export const dynamic = "force-static";
+export const revalidate = 300;
 
 const formatPercent = (value?: number) => {
   if (typeof value !== "number") {

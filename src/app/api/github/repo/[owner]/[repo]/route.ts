@@ -32,6 +32,8 @@ type GitHubCommit = {
 };
 
 export const runtime = "nodejs";
+export const dynamic = "force-static";
+export const revalidate = 300;
 
 const getHeaders = (token: string) => ({
   Authorization: `Bearer ${token}`,

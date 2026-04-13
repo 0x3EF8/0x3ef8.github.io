@@ -17,6 +17,8 @@ type GitHubApiRepo = {
 };
 
 export const runtime = "nodejs";
+export const dynamic = "force-static";
+export const revalidate = 300;
 
 const PER_PAGE = 100;
 

@@ -77,12 +77,12 @@ export const PORTFOLIO_FILE_PROFILES: Record<string, PortfolioFileProfile> = {
   "about.html": {
     title: "About",
     summary: "Professional overview, core stack, and engineering focus.",
-    realFilePath: "./files/about/about.html",
+    realFilePath: "./files/about-me/about.html",
   },
   "wakatime-dashboard.html": {
     title: "WakaTime Coding Dashboard",
     summary: "Comprehensive coding analytics powered by WakaTime stats.",
-    realFilePath: "./files/experience/wakatime-dashboard.html",
+    realFilePath: "./files/coding-stats/wakatime-dashboard.html",
   },
 };
 
