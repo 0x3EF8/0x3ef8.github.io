@@ -31,7 +31,7 @@ export default function DesktopScene() {
     controller.isViewerMaximized;
 
   return (
-    <main className="desk-page">
+    <main className={`desk-page${hasMaximizedSurface ? " is-surface-maximized" : ""}`}>
       <section ref={stageRef} className="desktop-stage">
         <DesktopTopBar dockTime={dockTime} onOpenTerminal={openTerminal} />
 

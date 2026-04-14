@@ -3,6 +3,36 @@ import type { FileManagerPlace, FileManagerRow } from "./types";
 
 export const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
+export const safelySetPointerCapture = (element: Element, pointerId: number) => {
+  if (!(element instanceof HTMLElement) || typeof element.setPointerCapture !== "function") {
+    return;
+  }
+
+  try {
+    element.setPointerCapture(pointerId);
+  } catch {
+    // Ignore capture failures on environments where pointer capture is not active.
+  }
+};
+
+export const safelyReleasePointerCapture = (element: Element, pointerId: number) => {
+  if (
+    !(element instanceof HTMLElement) ||
+    typeof element.hasPointerCapture !== "function" ||
+    typeof element.releasePointerCapture !== "function"
+  ) {
+    return;
+  }
+
+  try {
+    if (element.hasPointerCapture(pointerId)) {
+      element.releasePointerCapture(pointerId);
+    }
+  } catch {
+    // Ignore release failures to keep drag/resize interactions resilient.
+  }
+};
+
 export const normalizeLabel = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
 
 export const getFileExtension = (fileName: string) => {

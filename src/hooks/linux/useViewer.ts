@@ -11,7 +11,13 @@ import {
   VIEWER_MIN_HEIGHT,
   VIEWER_MIN_WIDTH,
 } from "../../constants";
-import { clamp, getFileExtension, getPathExtension } from "../../helpers";
+import {
+  clamp,
+  getFileExtension,
+  getPathExtension,
+  safelyReleasePointerCapture,
+  safelySetPointerCapture,
+} from "../../helpers";
 import type {
   LinuxSurfaceId,
   DragState,
@@ -71,6 +77,9 @@ type UseViewerParams = {
   openVimFile: (fileName: string, filePath: string) => void;
 };
 
+const COMPACT_VIEWER_MIN_WIDTH = 280;
+const COMPACT_VIEWER_MIN_HEIGHT = 210;
+
 export function useViewer({
   stageRef,
   isCompactLayout,
@@ -93,6 +102,37 @@ export function useViewer({
   const [viewerTextContent, setViewerTextContent] = useState("");
   const [viewerContentStatus, setViewerContentStatus] = useState<ViewerContentStatus>("idle");
   const [viewerError, setViewerError] = useState("");
+
+  const fitViewerToStage = () => {
+    const stageRect = stageRef.current?.getBoundingClientRect();
+    if (!stageRect) {
+      return;
+    }
+
+    const minWidth = isCompactLayout ? COMPACT_VIEWER_MIN_WIDTH : VIEWER_MIN_WIDTH;
+    const minHeight = isCompactLayout ? COMPACT_VIEWER_MIN_HEIGHT : VIEWER_MIN_HEIGHT;
+
+    const maxWidth = Math.max(minWidth, stageRect.width - SIDE_DOCK_CLEARANCE - 8);
+    const maxHeight = Math.max(minHeight, stageRect.height - TOP_PANEL_CLEARANCE - DOCK_CLEARANCE - 10);
+
+    const width = clamp(viewerSize.width, minWidth, maxWidth);
+    const height = clamp(viewerSize.height, minHeight, maxHeight);
+
+    const x = clamp(
+      (stageRect.width - width) / 2,
+      SIDE_DOCK_CLEARANCE,
+      Math.max(SIDE_DOCK_CLEARANCE, stageRect.width - width - 8),
+    );
+
+    const y = clamp(
+      (stageRect.height - height) / 2,
+      TOP_PANEL_CLEARANCE,
+      Math.max(TOP_PANEL_CLEARANCE, stageRect.height - height - DOCK_CLEARANCE),
+    );
+
+    setViewerSize({ width, height });
+    setViewerPosition({ x, y });
+  };
 
   useEffect(() => {
     if (!openedFile) {
@@ -169,13 +209,14 @@ export function useViewer({
       return;
     }
 
+    fitViewerToStage();
     setIsViewerOpen(true);
     setIsViewerMinimized(false);
     bringAnySurfaceToFront("viewer");
   };
 
   const toggleMaximizeViewer = () => {
-    if (isCompactLayout || !isViewerOpen) {
+    if (!isViewerOpen) {
       return;
     }
 
@@ -222,6 +263,7 @@ export function useViewer({
       path: mappedPath,
     };
 
+    fitViewerToStage();
     setOpenedFile(opened);
     setIsViewerOpen(true);
     setIsViewerMinimized(false);
@@ -233,7 +275,6 @@ export function useViewer({
       !isViewerOpen ||
       isViewerMinimized ||
       isViewerMaximized ||
-      isCompactLayout ||
       isViewerResizing ||
       event.button !== 0
     ) {
@@ -263,7 +304,7 @@ export function useViewer({
     };
 
     setIsViewerDragging(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
+    safelySetPointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleViewerDragMove = (event: ReactPointerEvent<HTMLElement>) => {
@@ -302,9 +343,7 @@ export function useViewer({
     viewerDragStateRef.current = null;
     setIsViewerDragging(false);
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    safelyReleasePointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleViewerResizeStart = (event: ReactPointerEvent<HTMLButtonElement>) => {
@@ -346,7 +385,7 @@ export function useViewer({
     };
 
     setIsViewerResizing(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
+    safelySetPointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleViewerResizeMove = (event: ReactPointerEvent<HTMLButtonElement>) => {
@@ -383,9 +422,7 @@ export function useViewer({
     viewerResizeStateRef.current = null;
     setIsViewerResizing(false);
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    safelyReleasePointerCapture(event.currentTarget, event.pointerId);
   };
 
   const isViewerVisible = isViewerOpen && !isViewerMinimized && Boolean(openedFile);
@@ -398,7 +435,7 @@ export function useViewer({
     zIndex: getSurfaceZIndex("viewer"),
   };
 
-  if (!isCompactLayout && !isViewerMaximized) {
+  if (!isViewerMaximized) {
     viewerStyle.left = `${viewerPosition.x}px`;
     viewerStyle.top = `${viewerPosition.y}px`;
     viewerStyle.right = "auto";

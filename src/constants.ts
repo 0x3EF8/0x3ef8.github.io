@@ -37,7 +37,7 @@ export const FOLDERS: readonly FolderDefinition[] = [
     tone: "ink",
     position: "folder-4",
     surfacePosition: "window-4",
-    files: [],
+    files: ["connect.html"],
   },
 ] as const;
 
@@ -83,6 +83,11 @@ export const PORTFOLIO_FILE_PROFILES: Record<string, PortfolioFileProfile> = {
     title: "WakaTime Coding Dashboard",
     summary: "Comprehensive coding analytics powered by WakaTime stats.",
     realFilePath: "./files/coding-stats/wakatime-dashboard.html",
+  },
+  "connect.html": {
+    title: "Connect",
+    summary: "Social and professional links for collaboration and contact.",
+    realFilePath: "./files/connect/connect.html",
   },
 };
 

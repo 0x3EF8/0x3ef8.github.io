@@ -5,6 +5,8 @@ import { useVim } from "../linux/useVim";
 import { useViewer } from "../linux/useViewer";
 import { useStack } from "../linux/useStack";
 
+const COMPACT_LAYOUT_QUERY = "(max-width: 980px), (max-height: 720px)";
+
 export function useDesktopController() {
   const stageRef = useRef<HTMLElement | null>(null);
   const [isCompactLayout, setIsCompactLayout] = useState(false);
@@ -13,7 +15,7 @@ export function useDesktopController() {
   );
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 900px)");
+    const mediaQuery = window.matchMedia(COMPACT_LAYOUT_QUERY);
 
     const syncLayout = () => {
       setIsCompactLayout(mediaQuery.matches);

@@ -15,7 +15,7 @@ import {
   TERMINAL_MIN_WIDTH,
   TOP_PANEL_CLEARANCE,
 } from "../../constants";
-import { clamp } from "../../helpers";
+import { clamp, safelyReleasePointerCapture, safelySetPointerCapture } from "../../helpers";
 import type {
   LinuxSurfaceId,
   DragState,
@@ -37,6 +37,9 @@ type UseTerminalParams = {
   openFolder: (folderId: FolderId) => void;
   openVim: () => void;
 };
+
+const COMPACT_TERMINAL_MIN_WIDTH = 280;
+const COMPACT_TERMINAL_MIN_HEIGHT = 190;
 
 export function useTerminal({
   stageRef,
@@ -107,7 +110,39 @@ export function useTerminal({
     ]);
   };
 
+  const fitTerminalToStage = () => {
+    const stageRect = stageRef.current?.getBoundingClientRect();
+    if (!stageRect) {
+      return;
+    }
+
+    const minWidth = isCompactLayout ? COMPACT_TERMINAL_MIN_WIDTH : TERMINAL_MIN_WIDTH;
+    const minHeight = isCompactLayout ? COMPACT_TERMINAL_MIN_HEIGHT : TERMINAL_MIN_HEIGHT;
+
+    const maxWidth = Math.max(minWidth, stageRect.width - SIDE_DOCK_CLEARANCE - 8);
+    const maxHeight = Math.max(minHeight, stageRect.height - TOP_PANEL_CLEARANCE - DOCK_CLEARANCE - 10);
+
+    const width = clamp(terminalSize.width, minWidth, maxWidth);
+    const height = clamp(terminalSize.height, minHeight, maxHeight);
+
+    const x = clamp(
+      (stageRect.width - width) / 2,
+      SIDE_DOCK_CLEARANCE,
+      Math.max(SIDE_DOCK_CLEARANCE, stageRect.width - width - 8),
+    );
+
+    const y = clamp(
+      (stageRect.height - height) / 2,
+      TOP_PANEL_CLEARANCE,
+      Math.max(TOP_PANEL_CLEARANCE, stageRect.height - height - DOCK_CLEARANCE),
+    );
+
+    setTerminalSize({ width, height });
+    setTerminalPosition({ x, y });
+  };
+
   const openTerminal = () => {
+    fitTerminalToStage();
     setIsTerminalOpen(true);
     setIsTerminalMinimized(false);
     bringAnySurfaceToFront("terminal");
@@ -135,7 +170,7 @@ export function useTerminal({
   };
 
   const toggleMaximizeTerminal = () => {
-    if (isCompactLayout || !isTerminalOpen) {
+    if (!isTerminalOpen) {
       return;
     }
 
@@ -216,7 +251,6 @@ export function useTerminal({
       !isTerminalOpen ||
       isTerminalMinimized ||
       isTerminalMaximized ||
-      isCompactLayout ||
       isTerminalResizing ||
       event.button !== 0
     ) {
@@ -246,7 +280,7 @@ export function useTerminal({
     };
 
     setIsTerminalDragging(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
+    safelySetPointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleTerminalDragMove = (event: ReactPointerEvent<HTMLElement>) => {
@@ -285,9 +319,7 @@ export function useTerminal({
     terminalDragStateRef.current = null;
     setIsTerminalDragging(false);
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    safelyReleasePointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleTerminalResizeStart = (event: ReactPointerEvent<HTMLButtonElement>) => {
@@ -329,7 +361,7 @@ export function useTerminal({
     };
 
     setIsTerminalResizing(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
+    safelySetPointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleTerminalResizeMove = (event: ReactPointerEvent<HTMLButtonElement>) => {
@@ -366,9 +398,7 @@ export function useTerminal({
     terminalResizeStateRef.current = null;
     setIsTerminalResizing(false);
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    safelyReleasePointerCapture(event.currentTarget, event.pointerId);
   };
 
   const isTerminalVisible = isTerminalOpen && !isTerminalMinimized;
@@ -388,7 +418,7 @@ export function useTerminal({
   terminalStyleWithVars["--terminal-glow"] = activeTerminalPreset.glow;
   terminalStyleWithVars["--terminal-neofetch-glow"] = activeTerminalPreset.neofetchGlow;
 
-  if (!isCompactLayout && !isTerminalMaximized) {
+  if (!isTerminalMaximized) {
     terminalStyle.left = `${terminalPosition.x}px`;
     terminalStyle.top = `${terminalPosition.y}px`;
     terminalStyle.right = "auto";

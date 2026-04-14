@@ -11,7 +11,7 @@ import {
   SIDE_DOCK_CLEARANCE,
   TOP_PANEL_CLEARANCE,
 } from "../../constants";
-import { clamp } from "../../helpers";
+import { clamp, safelyReleasePointerCapture, safelySetPointerCapture } from "../../helpers";
 import type {
   LinuxSurfaceId,
   DragState,
@@ -72,7 +72,7 @@ export function useFileExplorerWindows({
     setMinimizedFolderIds((current) => current.filter((id) => id !== folderId));
     setOpenFolderIds((current) => (current.includes(folderId) ? current : [...current, folderId]));
 
-    if (!isCompactLayout && !isAlreadyOpen) {
+    if (!isAlreadyOpen) {
       const stageRect = stageRef.current?.getBoundingClientRect();
 
       if (stageRect) {
@@ -168,10 +168,6 @@ export function useFileExplorerWindows({
   };
 
   const toggleMaximizeFolder = (folderId: FolderId) => {
-    if (isCompactLayout) {
-      return;
-    }
-
     bringSurfaceToFront(folderId);
     setMinimizedFolderIds((current) => current.filter((id) => id !== folderId));
     setMaximizedFolderIds((current) => {
@@ -233,7 +229,6 @@ export function useFileExplorerWindows({
 
   const handleFolderDragStart = (event: ReactPointerEvent<HTMLElement>, folderId: FolderId) => {
     if (
-      isCompactLayout ||
       maximizedFolderIds.includes(folderId) ||
       resizingFolderId === folderId ||
       event.button !== 0
@@ -267,7 +262,7 @@ export function useFileExplorerWindows({
     };
 
     setDraggingFolderId(folderId);
-    event.currentTarget.setPointerCapture(event.pointerId);
+    safelySetPointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleFolderDragMove = (event: ReactPointerEvent<HTMLElement>, folderId: FolderId) => {
@@ -309,9 +304,7 @@ export function useFileExplorerWindows({
     folderDragStateRef.current[folderId] = null;
     setDraggingFolderId((current) => (current === folderId ? null : current));
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    safelyReleasePointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleFolderResizeStart = (event: ReactPointerEvent<HTMLButtonElement>, folderId: FolderId) => {
@@ -350,7 +343,7 @@ export function useFileExplorerWindows({
     };
 
     setResizingFolderId(folderId);
-    event.currentTarget.setPointerCapture(event.pointerId);
+    safelySetPointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleFolderResizeMove = (event: ReactPointerEvent<HTMLButtonElement>, folderId: FolderId) => {
@@ -387,9 +380,7 @@ export function useFileExplorerWindows({
     folderResizeStateRef.current[folderId] = null;
     setResizingFolderId((current) => (current === folderId ? null : current));
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    safelyReleasePointerCapture(event.currentTarget, event.pointerId);
   };
 
   const visibleSurfaceIds = useMemo(

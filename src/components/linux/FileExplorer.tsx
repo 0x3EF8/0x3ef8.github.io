@@ -535,7 +535,7 @@ export function FileExplorer({ controller }: FileExplorerProps) {
           zIndex: controller.getSurfaceZIndex(folder.id),
         };
 
-        if (!controller.isCompactLayout && !isMaximized) {
+        if (!isMaximized) {
           if (position) {
             windowStyle.left = `${position.x}px`;
             windowStyle.top = `${position.y}px`;

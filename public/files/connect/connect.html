@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connect | 0x3EF8</title>
+    <style>
+      :root {
+        --bg-top: #1b1f27;
+        --bg-bottom: #12161d;
+        --panel: rgba(18, 24, 34, 0.84);
+        --line: rgba(144, 165, 197, 0.3);
+        --text: #e9f0fb;
+        --muted: #a8b8d2;
+        --accent: #7bd1ff;
+        --accent-strong: #45b7f4;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        font-family: "Space Grotesk", "Segoe UI", sans-serif;
+        background:
+          radial-gradient(980px 560px at 84% -12%, rgba(179, 194, 216, 0.15), transparent 62%),
+          radial-gradient(780px 470px at -6% 110%, rgba(93, 111, 140, 0.16), transparent 64%),
+          linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.22;
+        background-image: radial-gradient(rgba(175, 191, 216, 0.16) 0.65px, transparent 0.65px);
+        background-size: 22px 22px;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 1rem 1rem 1.8rem;
+      }
+
+      .shell {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.7rem;
+        color: var(--muted);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "Consolas", monospace;
+      }
+
+      .shell strong {
+        color: var(--accent);
+      }
+
+      .card {
+        margin-top: 0.8rem;
+        border-radius: 0.9rem;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, var(--panel), rgba(13, 19, 28, 0.9));
+        box-shadow:
+          0 1rem 2rem rgba(0, 0, 0, 0.42),
+          inset 0 1px 0 rgba(190, 208, 235, 0.14);
+        overflow: hidden;
+      }
+
+      .card-head {
+        padding: 0.7rem 0.88rem;
+        border-bottom: 1px solid rgba(133, 153, 182, 0.28);
+        background: rgba(14, 20, 29, 0.75);
+        font-family: "JetBrains Mono", "Consolas", monospace;
+        color: #91d8ff;
+        font-size: 0.8rem;
+      }
+
+      .card-body {
+        padding: 1rem;
+      }
+
+      h1 {
+        margin: 0;
+        line-height: 1.08;
+        font-size: clamp(1.35rem, 3.2vw, 2rem);
+      }
+
+      .lead {
+        margin: 0.58rem 0 0;
+        max-width: 60ch;
+        color: #d4e2f7;
+        line-height: 1.65;
+      }
+
+      .link-grid {
+        margin-top: 0.9rem;
+        display: grid;
+        gap: 0.55rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .link-card {
+        border-radius: 0.62rem;
+        border: 1px solid rgba(132, 153, 183, 0.34);
+        background: rgba(15, 21, 32, 0.72);
+        padding: 0.65rem 0.7rem;
+      }
+
+      .label {
+        margin: 0;
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #9eb8de;
+      }
+
+      .value {
+        margin: 0.3rem 0 0;
+      }
+
+      a {
+        color: #d9ecff;
+        text-decoration: none;
+        border-bottom: 1px dotted rgba(123, 209, 255, 0.6);
+      }
+
+      a:hover {
+        color: #ffffff;
+        border-bottom-color: rgba(180, 233, 255, 0.95);
+      }
+
+      .note {
+        margin-top: 0.85rem;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: 640px) {
+        main {
+          padding: 0.84rem 0.78rem 1.35rem;
+        }
+
+        .card-body {
+          padding: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="shell">
+        <p><strong>0x3EF8</strong> ~/portfolio/connect</p>
+        <p>available for focused collaborations</p>
+      </header>
+
+      <section class="card" aria-label="Connect profile links">
+        <header class="card-head">$ cat connect.html</header>
+        <div class="card-body">
+          <h1>Connect</h1>
+          <p class="lead">
+            Reach out for product engineering, frontend architecture, and full-stack delivery work.
+          </p>
+
+          <div class="link-grid">
+            <article class="link-card">
+              <p class="label">GitHub</p>
+              <p class="value"><a href="https://github.com/0x3ef8">github.com/0x3ef8</a></p>
+            </article>
+
+            <article class="link-card">
+              <p class="label">Portfolio</p>
+              <p class="value"><a href="https://jaypatrickcano.vercel.app">jaypatrickcano.vercel.app</a></p>
+            </article>
+
+            <article class="link-card">
+              <p class="label">Facebook</p>
+              <p class="value"><a href="https://www.facebook.com/x3ef8">facebook.com/x3ef8</a></p>
+            </article>
+
+            <article class="link-card">
+              <p class="label">Link Hub</p>
+              <p class="value"><a href="https://0x3ef8.github.io/linktree">0x3ef8.github.io/linktree</a></p>
+            </article>
+          </div>
+
+          <p class="note">Preferred response window: within 24 hours for qualified inquiries.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

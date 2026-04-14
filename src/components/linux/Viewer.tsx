@@ -113,7 +113,7 @@ export function Viewer({ controller }: ViewerProps) {
               src={normalizedImagePath}
               alt={openedFile.title}
               fill
-              sizes="(max-width: 900px) 82vw, 720px"
+              sizes="(max-width: 980px) 82vw, 720px"
             />
           ) : null}
 

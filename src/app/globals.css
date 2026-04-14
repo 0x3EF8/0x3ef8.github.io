@@ -22,6 +22,8 @@ body {
 }
 
 body {
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   background: #8b8c90;
   color: #eaebee;
@@ -57,6 +59,7 @@ body {
 .desk-page {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   isolation: isolate;
   padding: 0;
@@ -65,6 +68,20 @@ body {
   justify-content: center;
   background:
     radial-gradient(120% 95% at 50% 0%, #b6b7bc 0%, #8f9197 48%, #6e7078 100%);
+}
+
+.desk-page.is-surface-maximized .linux-topbar,
+.desk-page.is-surface-maximized .linux-dock,
+.desk-page.is-surface-maximized .desktop-github-toast,
+.desk-page.is-surface-maximized .desktop-widget-rail,
+.desk-page.is-surface-maximized .folder-card,
+.desk-page.is-surface-maximized .profile-wrap {
+  display: none;
+}
+
+.desk-page.is-surface-maximized .window-layer {
+  inset: 0;
+  padding: 0;
 }
 
 .desk-page::before {
@@ -100,8 +117,9 @@ body {
 .desktop-stage {
   position: relative;
   z-index: 1;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   animation: riseIn 0.75s ease;
 }
 
@@ -380,12 +398,12 @@ body {
   left: 0;
   right: 0;
   z-index: 26;
-  height: 1.68rem;
+  height: calc(1.68rem + env(safe-area-inset-top));
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 0.5rem;
-  padding: 0 0.6rem;
+  padding: env(safe-area-inset-top) 0.6rem 0;
   background: linear-gradient(180deg, rgba(8, 10, 13, 0.95), rgba(8, 10, 13, 0.88));
   border-bottom: 1px solid rgba(204, 212, 228, 0.18);
 }
@@ -889,6 +907,8 @@ body {
 }
 
 .folder-window-bar {
+  --window-control-size: 0.72rem;
+  --window-control-gap: 0.35rem;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -903,15 +923,15 @@ body {
 
 .window-controls {
   display: flex;
-  gap: 0.35rem;
+  gap: var(--window-control-gap);
 }
 
 .window-dot {
   appearance: none;
   border: 1px solid rgba(33, 35, 42, 0.42);
   padding: 0;
-  width: 0.72rem;
-  height: 0.72rem;
+  width: var(--window-control-size);
+  height: var(--window-control-size);
   border-radius: 50%;
   cursor: pointer;
   display: grid;
@@ -984,8 +1004,8 @@ body {
 }
 
 .window-spacer {
-  width: calc((0.72rem * 3) + (0.35rem * 2));
-  height: 0.72rem;
+  width: calc((var(--window-control-size) * 3) + (var(--window-control-gap) * 2));
+  height: var(--window-control-size);
 }
 
 .folder-window.is-dragging .folder-window-bar {
@@ -1001,18 +1021,32 @@ body {
 }
 
 .folder-window.is-maximized {
-  left: 0 !important;
-  top: 2.2rem !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: auto;
-  max-width: none;
-  height: auto;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  max-width: none !important;
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: 100vh !important;
+  height: 100dvh !important;
+  margin: 0 !important;
+  border-radius: 0;
+  z-index: 90 !important;
+}
+
+.folder-window.is-maximized .folder-window-bar {
+  --window-control-size: 1rem;
+  --window-control-gap: 0.48rem;
+  padding-top: calc(0.45rem + env(safe-area-inset-top));
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  background: linear-gradient(to bottom, rgba(70, 78, 92, 0.8), rgba(40, 45, 56, 0.72));
 }
 
 .folder-window.is-maximized .folder-window-body {
   flex: 1;
   overflow: auto;
+  padding-bottom: calc(0.84rem + env(safe-area-inset-bottom));
 }
 
 .folder-window-body {
@@ -2172,7 +2206,7 @@ body {
 .linux-dock {
   position: absolute;
   left: 50%;
-  bottom: 0.48rem;
+  bottom: calc(0.48rem + env(safe-area-inset-bottom));
   top: auto;
   transform: translateX(-50%);
   z-index: 22;
@@ -2191,6 +2225,7 @@ body {
   max-width: min(94vw, 980px);
   overflow-x: auto;
   overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   border-radius: 1rem;
   background: linear-gradient(180deg, rgba(28, 33, 43, 0.78), rgba(15, 19, 27, 0.86));
   border: 1px solid rgba(167, 183, 210, 0.26);
@@ -2570,9 +2605,17 @@ body {
 }
 
 
-@media (max-width: 900px) {
+@media (max-width: 980px), (max-height: 720px) {
+  .desk-page {
+    overflow-x: hidden;
+    overflow-y: auto;
+    align-items: stretch;
+  }
+
   .desktop-stage {
     min-height: 100vh;
+    min-height: 100dvh;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 3.8rem);
   }
 
   .desktop-widget-rail {
@@ -2581,8 +2624,8 @@ body {
 
   .linux-topbar {
     grid-template-columns: auto 1fr auto;
-    height: 1.58rem;
-    padding: 0 0.45rem;
+    height: calc(1.58rem + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) 0.45rem 0;
   }
 
   .desktop-github-toast {
@@ -2638,23 +2681,24 @@ body {
 
   .window-layer {
     top: 4.2rem;
-    bottom: 0.8rem;
+    bottom: calc(env(safe-area-inset-bottom) + 3.8rem);
     left: 0;
     right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.62rem;
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  .folder-card {
+    display: none;
   }
 
   .folder-window {
-    position: relative;
-    width: min(84vw, 390px);
+    position: absolute;
+    width: min(92vw, 430px);
+    max-width: 92vw;
     min-height: 180px;
-    left: auto;
-    right: auto;
-    top: auto;
-    bottom: auto;
   }
 
   .viewer-frame {
@@ -2689,20 +2733,10 @@ body {
   }
 
   .folder-window-bar {
-    cursor: default;
-    touch-action: auto;
-  }
-
-  .folder-window.is-maximized {
-    left: auto !important;
-    top: auto !important;
-    width: min(84vw, 390px);
-    height: auto;
-  }
-
-  .folder-window.is-maximized .folder-window-body {
-    flex: 1;
-    overflow: visible;
+    --window-control-size: 0.96rem;
+    --window-control-gap: 0.42rem;
+    cursor: grab;
+    touch-action: none;
   }
 
   .window-resizer {
@@ -2712,7 +2746,7 @@ body {
   .linux-dock {
     left: 50%;
     top: auto;
-    bottom: 0.3rem;
+    bottom: calc(0.3rem + env(safe-area-inset-bottom));
     transform: translateX(-50%);
   }
 
@@ -2728,8 +2762,8 @@ body {
   }
 
   .linux-topbar {
-    height: 1.52rem;
-    padding: 0 0.38rem;
+    height: calc(1.52rem + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) 0.38rem 0;
   }
 
   .desktop-github-toast {
@@ -2798,12 +2832,11 @@ body {
 
   .window-layer {
     top: 4rem;
-    bottom: 0.6rem;
-    gap: 0.5rem;
+    bottom: calc(env(safe-area-inset-bottom) + 3.8rem);
   }
 
   .folder-window {
-    width: min(82vw, 350px);
+    max-width: min(90vw, 360px);
   }
 
   .viewer-frame {
@@ -2869,7 +2902,7 @@ body {
   .linux-dock {
     left: 50%;
     top: auto;
-    bottom: 0.18rem;
+    bottom: calc(0.18rem + env(safe-area-inset-bottom));
     transform: translateX(-50%);
   }
 
@@ -2894,6 +2927,63 @@ body {
 
   .profile-photo {
     max-height: 68vh;
+    max-height: 68dvh;
+  }
+}
+
+@media (max-width: 480px) {
+  .linux-topbar {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .linux-topbar-right {
+    display: none;
+  }
+
+  .linux-topbar-left .linux-panel-button:first-child {
+    display: none;
+  }
+
+  .desktop-github-toast {
+    right: 0.24rem;
+    width: calc(100vw - 0.48rem);
+  }
+
+  .folder-card {
+    width: clamp(30px, 12vw, 42px);
+    gap: 0.24rem;
+  }
+
+  .folder-label {
+    display: none;
+  }
+
+  .folder-window {
+    max-width: min(94vw, 360px);
+  }
+
+  .linux-dock-track {
+    gap: 0.22rem;
+    padding: 0.28rem 0.2rem;
+    max-width: 97vw;
+  }
+
+  .dock-item {
+    width: 1.72rem;
+  }
+}
+
+@media (max-height: 540px) {
+  .window-layer {
+    top: 3.7rem;
+  }
+
+  .profile-wrap {
+    display: none;
+  }
+
+  .folder-label {
+    display: none;
   }
 }
 

@@ -18,7 +18,7 @@ import {
   VIM_MIN_HEIGHT,
   VIM_MIN_WIDTH,
 } from "../../constants";
-import { clamp } from "../../helpers";
+import { clamp, safelyReleasePointerCapture, safelySetPointerCapture } from "../../helpers";
 import type {
   LinuxSurfaceId,
   DragState,
@@ -38,6 +38,8 @@ type UseVimParams = {
 };
 
 const VIM_FILE_NAME = "notes.md";
+const COMPACT_VIM_MIN_WIDTH = 290;
+const COMPACT_VIM_MIN_HEIGHT = 220;
 
 export function useVim({
   stageRef,
@@ -173,34 +175,35 @@ export function useVim({
     setVimCommandHistoryIndex(-1);
     vimPreferredColumnRef.current = null;
 
-    if (!isCompactLayout) {
-      const stageRect = stageRef.current?.getBoundingClientRect();
+    const stageRect = stageRef.current?.getBoundingClientRect();
 
-      if (stageRect) {
-        const maxWidth = Math.max(VIM_MIN_WIDTH, stageRect.width - SIDE_DOCK_CLEARANCE - 8);
-        const maxHeight = Math.max(
-          VIM_MIN_HEIGHT,
-          stageRect.height - TOP_PANEL_CLEARANCE - DOCK_CLEARANCE - 10,
-        );
+    if (stageRect) {
+      const minWidth = isCompactLayout ? COMPACT_VIM_MIN_WIDTH : VIM_MIN_WIDTH;
+      const minHeight = isCompactLayout ? COMPACT_VIM_MIN_HEIGHT : VIM_MIN_HEIGHT;
 
-        const width = clamp(DEFAULT_VIM_WIDTH, VIM_MIN_WIDTH, maxWidth);
-        const height = clamp(DEFAULT_VIM_HEIGHT, VIM_MIN_HEIGHT, maxHeight);
+      const maxWidth = Math.max(minWidth, stageRect.width - SIDE_DOCK_CLEARANCE - 8);
+      const maxHeight = Math.max(
+        minHeight,
+        stageRect.height - TOP_PANEL_CLEARANCE - DOCK_CLEARANCE - 10,
+      );
 
-        const x = clamp(
-          (stageRect.width - width) / 2,
-          SIDE_DOCK_CLEARANCE,
-          Math.max(SIDE_DOCK_CLEARANCE, stageRect.width - width - 8),
-        );
+      const width = clamp(DEFAULT_VIM_WIDTH, minWidth, maxWidth);
+      const height = clamp(DEFAULT_VIM_HEIGHT, minHeight, maxHeight);
 
-        const y = clamp(
-          (stageRect.height - height) / 2,
-          TOP_PANEL_CLEARANCE,
-          Math.max(TOP_PANEL_CLEARANCE, stageRect.height - height - DOCK_CLEARANCE),
-        );
+      const x = clamp(
+        (stageRect.width - width) / 2,
+        SIDE_DOCK_CLEARANCE,
+        Math.max(SIDE_DOCK_CLEARANCE, stageRect.width - width - 8),
+      );
 
-        setVimSize({ width, height });
-        setVimPosition({ x, y });
-      }
+      const y = clamp(
+        (stageRect.height - height) / 2,
+        TOP_PANEL_CLEARANCE,
+        Math.max(TOP_PANEL_CLEARANCE, stageRect.height - height - DOCK_CLEARANCE),
+      );
+
+      setVimSize({ width, height });
+      setVimPosition({ x, y });
     }
 
     bringAnySurfaceToFront("vim");
@@ -284,7 +287,7 @@ export function useVim({
   };
 
   const toggleMaximizeVim = () => {
-    if (isCompactLayout || !isVimOpen) {
+    if (!isVimOpen) {
       return;
     }
 
@@ -567,7 +570,6 @@ export function useVim({
       !isVimOpen ||
       isVimMinimized ||
       isVimMaximized ||
-      isCompactLayout ||
       isVimResizing ||
       event.button !== 0
     ) {
@@ -597,7 +599,7 @@ export function useVim({
     };
 
     setIsVimDragging(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
+    safelySetPointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleVimDragMove = (event: ReactPointerEvent<HTMLElement>) => {
@@ -636,9 +638,7 @@ export function useVim({
     vimDragStateRef.current = null;
     setIsVimDragging(false);
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    safelyReleasePointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleVimResizeStart = (event: ReactPointerEvent<HTMLButtonElement>) => {
@@ -680,7 +680,7 @@ export function useVim({
     };
 
     setIsVimResizing(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
+    safelySetPointerCapture(event.currentTarget, event.pointerId);
   };
 
   const handleVimResizeMove = (event: ReactPointerEvent<HTMLButtonElement>) => {
@@ -714,9 +714,7 @@ export function useVim({
     vimResizeStateRef.current = null;
     setIsVimResizing(false);
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
+    safelyReleasePointerCapture(event.currentTarget, event.pointerId);
   };
 
   const isVimVisible = isVimOpen && !isVimMinimized;
@@ -725,7 +723,7 @@ export function useVim({
     zIndex: getSurfaceZIndex("vim"),
   };
 
-  if (!isCompactLayout && !isVimMaximized) {
+  if (!isVimMaximized) {
     vimStyle.left = `${vimPosition.x}px`;
     vimStyle.top = `${vimPosition.y}px`;
     vimStyle.right = "auto";
